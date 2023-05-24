@@ -15,7 +15,7 @@ event_num = random.randrange(1,3,1)
 impath = https://github.com/gege0430/VirtualRagdollCatcafe.git
 
 window = tk.Tk()
-window.config(highlightbackground = ' black')
+window.config(highlightbackground = 'black')
 label = tk.Label(window, bd = 0, bg = 'black')
 window.overrideredirect(True)
 window.wm_attributes('-transparent', True)
@@ -94,11 +94,11 @@ def change_event(progress, status, event_num, x):
         frame = walk_right_num[progress]
         progress, event_num = gif_work(progress, walk_right_num, event_num, 1, 11)
         x -= -3
-        window.geometry('100x100+'+str(x)+'+1050')
-        label.configure(image=frame)
+        window.geometry('100x100+' + str(x) + '+1050')
+        label.configure(image = frame)
         window.after(1, event, progress, status, event_num, x)
 
-#transfer random no. to event
+#create event
 def event(progress, status, event_num, x):
     if event_num in norm_num:
         status = 0
