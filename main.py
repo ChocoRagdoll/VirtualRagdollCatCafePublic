@@ -62,6 +62,7 @@ def gif_work(progress, frames, event_num, first_num, last_num):
         event_num = random.randrange(first_num, last_num, 1)
     return progress, event_num
 
+#change event
 def change_event(progress, status, event_num, x):
     #norm
     if status == 0:
@@ -128,7 +129,7 @@ def event(progress, status, event_num, x):
     elif event_num in walk_right_num:
         status = 5
         print('walking towards right')
-        window.after(100, change_event, progress, event, event_num, x)#no 8,9 = walk towards right
+        window.after(100, change_event, progress, event, event_num, x)
     
 
  
