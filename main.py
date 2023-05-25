@@ -8,25 +8,26 @@ status = 1
 norm_num = [1, 2]
 norm_to_rest_num = [3]
 rest_num = [4, 5]
-rest_to_norm = [6]
+rest_to_norm_num = [6]
 walk_left_num = [7, 8]
 walk_right_num = [9, 10]
 event_num = random.randrange(1,3,1)
 impath = https://github.com/gege0430/VirtualRagdollCatcafe.git
 
 window = tk.Tk()
+window.title("Virtual Ragdoll Catcafe")
 window.config(highlightbackground = 'black')
 label = tk.Label(window, bd = 0, bg = 'black')
 window.overrideredirect(True)
 window.wm_attributes('-transparent', True)
-
-label.pack()
 window.mainloop()
+label.pack()
+
 
 norm_images = []
 for a in range(5):
     image = tk.PhotoImage(file = impath + 'norm.gif', format = 'gif -index %a')
-    norm_imagines.append(image)
+    norm_images.append(image)
 
 rest_images = []
 for b in range(5):
@@ -82,7 +83,7 @@ def change_event(progress, status, event_num, x):
     #rest to norm
     elif status == 3:
         frame = rest_to_norm_images[progress]
-        progress ,event_num = gif_work(progress, est_to_norm_images, event_num, 1, 3)
+        progress ,event_num = gif_work(progress, rest_to_norm_images, event_num, 1, 3)
 
     #walk left
     elif status == 4:
@@ -104,27 +105,27 @@ def event(progress, status, event_num, x):
     if event_num in norm_num:
         status = 0
         print('norm')
-        window.after(400, update, progress, event, event_num, x) 
+        window.after(400, change_event, progress, event, event_num, x) 
 
     elif event_num in norm_to_rest_num:
         status = 1
         print('from norm to rest')
-        window.after(100, update, progress, event, event_num, x) 
+        window.after(100, change_event, progress, event, event_num, x) 
 
     elif event_num in rest_num:
         status = 2
         print('rest')
-        window.after(1000, update, progress, event, event_num, x)
+        window.after(1000, change_event, progress, event, event_num, x)
 
     elif event_num in rest_to_norm_num:
         status = 3
         print('from rest to norm')
-        window.after(100, update, progress, event, event_num,x)
+        window.after(100, change_event, progress, event, event_num,x)
     
     elif event_num in walk_left_num:
         status = 4
         print('walking towards left')
-        window.after(100, update, progress, event, event_num, x)
+        window.after(100, change_event, progress, event, event_num, x)
 
     elif event_num in walk_right_num:
         status = 5
