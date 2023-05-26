@@ -128,7 +128,7 @@ def drag(event):
     global x, y
     window.geometry(f"+{event.x_root - x}+{event.y_root - y}")
 
-#resize window
+#resize window(to do)
 def resize(event):
     width = event.width
     height = event.height
@@ -149,4 +149,4 @@ window.wm_attributes('-transparentcolor','black')
 
 #loop and end program
 window.after(1, change_event, progress, status, event_num, x)
-window.mainloop() 
+window.mainloop()
