@@ -84,13 +84,11 @@ def change_event(progress, status, event_num, x):
     elif status == 4:
         frame = upcoming3_images[progress]
         progress, event_num = gif_work(progress, upcoming3_images, event_num)
-        x -= 3
-
+        
     #upcoming4
     else:
         frame = upcoming4_images[progress]
         progress, event_num = gif_work(progress, upcoming4_images, event_num)
-        x -= -3
     
     window.geometry('100x100+' + str(x) + '+1050')
     label.configure(image = frame)
@@ -116,7 +114,7 @@ def event(progress, status, event_num, x):
     elif event_num in upcoming2_num:
         status = 3
         print('upcoming2')
-        window.after(400, change_event, progress, event, event_num,x)
+        window.after(400, change_event, progress, event, event_num, x)
     
     elif event_num in upcoming3_num:
         status = 4
@@ -128,11 +126,9 @@ def event(progress, status, event_num, x):
         print('upcoming4')
         window.after(400, change_event, progress, event, event_num, x)
     
-window.config(highlightbackground = 'black')
+#create a labe;
 label = tk.Label(window, bd = 0, bg = 'black')
 label.pack()  
-window.overrideredirect(True)
-window.wm_attributes('-transparent', True)
 
 #loop and end program
 window.after(1, change_event, progress, status, event_num, x)
