@@ -4,8 +4,9 @@ import pyautogui
 
 #set up variables
 x = 1400
-progress = 0
+y = 500
 status = 1
+progress = 0
 default_num = [1, 2]
 blink_num = [3, 4]
 upcoming1_num = [5, 6]
@@ -18,6 +19,7 @@ path = "C:/Chrome Downloads/"
 #set up window
 window = tk.Tk()
 window.title("Virtual Ragdoll Catcafe") 
+window.geometry('1024x1024+' + str(x) + str(y))
 
 default_images = []
 for a in range(15):
@@ -48,6 +50,21 @@ upcoming4_images = []
 for f in range(5):
     image = tk.PhotoImage(file = path + "blink.gif", format = f'gif -index {f}')
     upcoming4_images.append(image)
+
+#track the initial position for dragging the pet
+def start_drag(event):
+    global x, y
+    x = event.x
+    y = event.y
+
+#update the window position while dragging
+def drag(event):
+    global x, y
+    window.geometry(f"+{event.x_root - x}+{event.y_root - y}")
+
+# Bind the mouse events to the window
+window.bind("<ButtonPress-1>", start_drag)
+window.bind("<B1-Motion>", drag)
 
 #make gif work
 def gif_work(progress, frames, event_num):
@@ -90,41 +107,36 @@ def change_event(progress, status, event_num, x):
         frame = upcoming4_images[progress]
         progress, event_num = gif_work(progress, upcoming4_images, event_num)
     
-    window.geometry('1024x1024+' + str(x) + '+500')
     label.configure(image = frame)
-    window.after(1, event, progress, status, event_num, x)
+    window.after(1, create_event, progress, status, event_num, x)
 
 #create event
-def event(progress, status, event_num, x):
+def create_event(progress, status, event_num, x):
     if event_num in default_num:
         status = 0
         print('default')
-        window.after(100, change_event, progress, status, event_num, x) 
 
     elif event_num in blink_num:
         status = 1
         print('blink')
-        window.after(100, change_event, progress, status, event_num, x) 
 
     elif event_num in upcoming1_num:
         status = 2
         print('upcoming1')
-        window.after(100, change_event, progress, status, event_num, x)
 
     elif event_num in upcoming2_num:
         status = 3
         print('upcoming2')
-        window.after(100, change_event, progress, status, event_num, x)
     
     elif event_num in upcoming3_num:
         status = 4
         print('upcoming3')
-        window.after(100, change_event, progress, status, event_num, x)
 
     elif event_num in upcoming4_num:
         status = 5
         print('upcoming4')
-        window.after(100, change_event, progress, status, event_num, x)
+    
+    window.after(100, change_event, progress, status, event_num, x)
     
 #create a label;
 label = tk.Label(window, bd = 0, bg = 'black')
