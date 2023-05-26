@@ -1,13 +1,14 @@
 import random
 import tkinter as tk
 import pyautogui
+from PIL import Image, ImageTk
 
 #set up variables
 x = 1400
 y = 500
 status = 1
 progress = 0
-default_num = [1, 2]
+tail_num = [1, 2]
 blink_num = [3, 4]
 upcoming1_num = [5, 6]
 upcoming2_num = [7, 8]
@@ -19,37 +20,34 @@ path = "C:/Chrome Downloads/"
 #set up window
 window = tk.Tk()
 window.title("Virtual Ragdoll Catcafe") 
-window.geometry('1024x1024+' + str(x) + str(y))
+window.geometry('1024x1024+' + str(x) + "+" + str(y))
 
-default_images = []
-for a in range(15):
-    image = tk.PhotoImage(file = path + "default.gif", format = f'gif -index {a}')
-    default_images.append(image)
+#create a list of frames
+def create_images(str, frames):
+    gif_path = path + str
+    gif = Image.open(gif_path)
+    
+    for frame in range(gif.n_frames):
+        gif.seek(frame)
+        image = gif.convert("RGBA")  # Convert to RGBA to preserve transparency, if any
+        image.save(f"frame_{frame}.png", "PNG")
 
-blink_images = []
-for b in range(5):
-    image = tk.PhotoImage(file = path + "blink.gif", format = f'gif -index {b}')
-    blink_images.append(image)
+    gif_images = []
+    
+    for frame in range(frames):
+        image_file = f"frame_{frame}.png"
+        image = ImageTk.PhotoImage(file=image_file)
+        gif_images.append(image)
 
-upcoming1_images = []
-for c in range(15):
-    image = tk.PhotoImage(file = path + "default.gif", format = f'gif -index {c}')
-    upcoming1_images.append(image)
+    return gif_images
 
-upcoming2_images = []
-for d in range(5):
-    image = tk.PhotoImage(file = path + "blink.gif", format = f'gif -index {d}')
-    upcoming2_images.append(image)
-
-upcoming3_images = []
-for e in range(15):
-    image = tk.PhotoImage(file = path + "default.gif", format = f'gif -index {e}')
-    upcoming3_images.append(image)
-
-upcoming4_images = []
-for f in range(5):
-    image = tk.PhotoImage(file = path + "blink.gif", format = f'gif -index {f}')
-    upcoming4_images.append(image)
+#set up frames for each action
+tail_images = create_images("tail40.gif", 40)
+blink_images = create_images("blink50.gif", 50)
+upcoming1_images = create_images("tail40.gif", 40)
+upcoming2_images = create_images("blink50.gif", 50)
+upcoming3_images = create_images("tail40.gif", 40)
+upcoming4_images = create_images("blink50.gif", 50)
 
 #track the initial position for dragging the pet
 def start_drag(event):
@@ -79,23 +77,23 @@ def gif_work(progress, frames, event_num):
 def change_event(progress, status, event_num, x):
     #default
     if status == 0:
-        frame = default_images[progress]
-        progress ,event_num = gif_work(progress, default_images, event_num)
+        frame = tail_images[progress]
+        progress, event_num = gif_work(progress, tail_images, event_num)
 
     #blink
     elif status == 1:
         frame = blink_images[progress]
-        progress ,event_num = gif_work(progress, blink_images, event_num)
+        progress, event_num = gif_work(progress, blink_images, event_num)
         
     #upcoming1
     elif status == 2:
         frame = upcoming1_images[progress]
-        progress ,event_num = gif_work(progress, upcoming1_images, event_num)
+        progress, event_num = gif_work(progress, upcoming1_images, event_num)
 
     #upcoming2
     elif status == 3:
         frame = upcoming2_images[progress]
-        progress ,event_num = gif_work(progress, upcoming2_images, event_num)
+        progress, event_num = gif_work(progress, upcoming2_images, event_num)
 
     #upcoming3
     elif status == 4:
@@ -112,9 +110,9 @@ def change_event(progress, status, event_num, x):
 
 #create event
 def create_event(progress, status, event_num, x):
-    if event_num in default_num:
+    if event_num in tail_num:
         status = 0
-        print('default')
+        print('tail')
 
     elif event_num in blink_num:
         status = 1
