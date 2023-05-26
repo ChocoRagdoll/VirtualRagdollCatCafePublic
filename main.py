@@ -17,15 +17,7 @@ path = "/Users/chengege/Downloads/"
 
 #set up window
 window = tk.Tk()
-window.title("Virtual Ragdoll Catcafe")
-window.config(highlightbackground = 'black')
-window.overrideredirect(True)
-window.wm_attributes('-transparent', True)
-
-#set up label
-label = tk.Label(window, bd = 0, bg = 'black')
-label.pack()
-
+window.title("Virtual Ragdoll Catcafe") 
 
 default_images = []
 for a in range(15):
@@ -68,34 +60,34 @@ def gif_work(progress, frames, event_num):
 
 #change event
 def change_event(progress, status, event_num, x):
-    #norm
+    #default
     if status == 0:
         frame = default_images[progress]
         progress ,event_num = gif_work(progress, default_images, event_num)
 
-    #norm to rest
+    #blink
     elif status == 1:
         frame = blink_images[progress]
         progress ,event_num = gif_work(progress, blink_images, event_num)
         
-    #rest
+    #upcoming1
     elif status == 2:
         frame = upcoming1_images[progress]
         progress ,event_num = gif_work(progress, upcoming1_images, event_num)
 
-    #rest to norm
+    #upcoming2
     elif status == 3:
         frame = upcoming2_images[progress]
         progress ,event_num = gif_work(progress, upcoming2_images, event_num)
 
-    #walk left
+    #upcoming3
     elif status == 4:
         frame = upcoming3_images[progress]
         progress, event_num = gif_work(progress, upcoming3_images, event_num)
         x -= 3
 
-    #walk right
-    elif status == 5:
+    #upcoming4
+    else:
         frame = upcoming4_images[progress]
         progress, event_num = gif_work(progress, upcoming4_images, event_num)
         x -= -3
@@ -113,28 +105,35 @@ def event(progress, status, event_num, x):
 
     elif event_num in blink_num:
         status = 1
-        print('from norm to rest')
+        print('blink')
         window.after(400, change_event, progress, event, event_num, x) 
 
     elif event_num in upcoming1_num:
         status = 2
-        print('rest')
+        print('upcoming1')
         window.after(400, change_event, progress, event, event_num, x)
 
     elif event_num in upcoming2_num:
         status = 3
-        print('from rest to norm')
+        print('upcoming2')
         window.after(400, change_event, progress, event, event_num,x)
     
     elif event_num in upcoming3_num:
         status = 4
-        print('walking towards left')
+        print('upcoming3')
         window.after(400, change_event, progress, event, event_num, x)
 
     elif event_num in upcoming4_num:
         status = 5
-        print('walking towards right')
+        print('upcoming4')
         window.after(400, change_event, progress, event, event_num, x)
     
-# end program
-window.mainloop()
+window.config(highlightbackground = 'black')
+label = tk.Label(window, bd = 0, bg = 'black')
+label.pack()  
+window.overrideredirect(True)
+window.wm_attributes('-transparent', True)
+
+#loop and end program
+window.after(1, change_event, progress, status, event_num, x)
+window.mainloop() 
