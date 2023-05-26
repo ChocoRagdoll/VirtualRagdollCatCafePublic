@@ -23,46 +23,27 @@ window.title("Virtual Ragdoll Catcafe")
 window.geometry('1024x1024+' + str(x) + "+" + str(y))
 
 #create a list of frames
-def create_images(str, frames):
+def create_images(str):
     gif_path = path + str
-    gif = Image.open(gif_path)
-    
-    for frame in range(gif.n_frames):
-        gif.seek(frame)
-        image = gif.convert("RGBA")  # Convert to RGBA to preserve transparency, if any
-        image.save(f"frame_{frame}.png", "PNG")
+    original_gif = Image.open(gif_path)
 
-    gif_images = []
+    frames = []
+    try:
+        while True:
+            frames.append(original_gif.copy())
+            original_gif.seek(len(frames))  # Move to the next frame
+    except EOFError:
+        pass
     
-    for frame in range(frames):
-        image_file = f"frame_{frame}.png"
-        image = ImageTk.PhotoImage(file=image_file)
-        gif_images.append(image)
-
-    return gif_images
+    return [ImageTk.PhotoImage(frame) for frame in frames]
 
 #set up frames for each action
-tail_images = create_images("tail40.gif", 40)
-blink_images = create_images("blink50.gif", 50)
-upcoming1_images = create_images("tail40.gif", 40)
-upcoming2_images = create_images("blink50.gif", 50)
-upcoming3_images = create_images("tail40.gif", 40)
-upcoming4_images = create_images("blink50.gif", 50)
-
-#track the initial position for dragging the pet
-def start_drag(event):
-    global x, y
-    x = event.x
-    y = event.y
-
-#update the window position while dragging
-def drag(event):
-    global x, y
-    window.geometry(f"+{event.x_root - x}+{event.y_root - y}")
-
-# Bind the mouse events to the window
-window.bind("<ButtonPress-1>", start_drag)
-window.bind("<B1-Motion>", drag)
+tail_images = create_images("tail40.gif")
+blink_images = create_images("blink50.gif")
+upcoming1_images = create_images("tail40.gif")
+upcoming2_images = create_images("blink50.gif")
+upcoming3_images = create_images("tail40.gif")
+upcoming4_images = create_images("blink50.gif")
 
 #make gif work
 def gif_work(progress, frames, event_num):
@@ -135,6 +116,28 @@ def create_event(progress, status, event_num, x):
         print('upcoming4')
     
     window.after(100, change_event, progress, status, event_num, x)
+
+#track the initial position for dragging the pet
+def start_drag(event):
+    global x, y
+    x = event.x
+    y = event.y
+
+#update the window position while dragging
+def drag(event):
+    global x, y
+    window.geometry(f"+{event.x_root - x}+{event.y_root - y}")
+
+#resize window
+def resize(event):
+    width = event.width
+    height = event.height
+    window.geometry(f"{width}x{height}")
+
+# Bind the mouse events to the window
+window.bind("<ButtonPress-1>", start_drag)
+window.bind("<B1-Motion>", drag)
+window.bind("<Configure>", resize)
     
 #create a label;
 label = tk.Label(window, bd = 0, bg = 'black')
