@@ -13,7 +13,7 @@ upcoming2_num = [7, 8]
 upcoming3_num = [9, 10]
 upcoming4_num = [11, 12]
 event_num = random.randrange(1,3,1)
-path = "/Users/chengege/Downloads/"
+path = "C:/Chrome Downloads/"
 
 #set up window
 window = tk.Tk()
@@ -90,7 +90,7 @@ def change_event(progress, status, event_num, x):
         frame = upcoming4_images[progress]
         progress, event_num = gif_work(progress, upcoming4_images, event_num)
     
-    window.geometry('100x100+' + str(x) + '+1050')
+    window.geometry('1024x1024+' + str(x) + '+500')
     label.configure(image = frame)
     window.after(1, event, progress, status, event_num, x)
 
@@ -99,36 +99,40 @@ def event(progress, status, event_num, x):
     if event_num in default_num:
         status = 0
         print('default')
-        window.after(400, change_event, progress, event, event_num, x) 
+        window.after(100, change_event, progress, status, event_num, x) 
 
     elif event_num in blink_num:
         status = 1
         print('blink')
-        window.after(400, change_event, progress, event, event_num, x) 
+        window.after(100, change_event, progress, status, event_num, x) 
 
     elif event_num in upcoming1_num:
         status = 2
         print('upcoming1')
-        window.after(400, change_event, progress, event, event_num, x)
+        window.after(100, change_event, progress, status, event_num, x)
 
     elif event_num in upcoming2_num:
         status = 3
         print('upcoming2')
-        window.after(400, change_event, progress, event, event_num, x)
+        window.after(100, change_event, progress, status, event_num, x)
     
     elif event_num in upcoming3_num:
         status = 4
         print('upcoming3')
-        window.after(400, change_event, progress, event, event_num, x)
+        window.after(100, change_event, progress, status, event_num, x)
 
     elif event_num in upcoming4_num:
         status = 5
         print('upcoming4')
-        window.after(400, change_event, progress, event, event_num, x)
+        window.after(100, change_event, progress, status, event_num, x)
     
-#create a labe;
+#create a label;
 label = tk.Label(window, bd = 0, bg = 'black')
 label.pack()  
+
+window.config(highlightbackground='black')
+window.overrideredirect(True)
+window.wm_attributes('-transparentcolor','black')
 
 #loop and end program
 window.after(1, change_event, progress, status, event_num, x)
