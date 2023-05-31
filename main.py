@@ -1,6 +1,7 @@
+import os
+import pyautogui
 import random
 import tkinter as tk
-import pyautogui
 from PIL import Image, ImageTk
 
 #set up variables
@@ -15,7 +16,7 @@ upcoming2_num = [7, 8]
 upcoming3_num = [9, 10]
 upcoming4_num = [11, 12]
 event_num = random.randrange(1,3,1)
-path = "C:/Chrome Downloads/"
+assets_folder = os.path.join("assets")
 
 #set up window
 window = tk.Tk()
@@ -24,7 +25,7 @@ window.geometry('1024x1024+' + str(x) + "+" + str(y))
 
 #create a list of frames
 def create_images(str):
-    gif_path = path + str
+    gif_path = os.path.join(assets_folder, str)
     original_gif = Image.open(gif_path)
 
     frames = []
@@ -56,7 +57,7 @@ def gif_work(progress, frames, event_num):
 
 #change event
 def change_event(progress, status, event_num, x):
-    #default
+    #tail
     if status == 0:
         frame = tail_images[progress]
         progress, event_num = gif_work(progress, tail_images, event_num)
