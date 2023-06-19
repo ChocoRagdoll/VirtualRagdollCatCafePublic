@@ -146,7 +146,7 @@ label.pack()
 
 window.config(highlightbackground='black')
 window.overrideredirect(True)
-window.wm_attributes('-transparentcolor','black')
+#window.wm_attributes('-transparentcolor','black')
 
 #loop and end program
 window.after(1, change_event, progress, status, event_num, x)
