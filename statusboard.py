@@ -2,9 +2,12 @@ import tkinter as tk
 from tkinter import ttk, messagebox
 import googletrans as gt
 import textblob as tb
+import os
+import random
 from PIL import ImageTk, Image
 from todopage import TodoPage
 from translatepage import TranslatePage
+from main import VirtualRagdollCatcafe
 
 
 BABY_PINK = "#f8c6c7"
@@ -31,9 +34,12 @@ class StatusBoard(tk.Tk):
         #options Widge
         self.functions = Functions(self, self.control_bar, self.main)
 
+        self.pet =  VirtualRagdollCatcafe()
+
 
         #run
         self.mainloop()
+        
 
 class ControlBar(tk.Frame):
     def __init__(self, parent):

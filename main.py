@@ -1,153 +1,120 @@
 import os
-import pyautogui
 import random
 import tkinter as tk
 from PIL import Image, ImageTk
 
-#set up variables
-x = 1400
-y = 500
-status = 1
-progress = 0
-tail_num = [1, 2]
-blink_num = [3, 4]
-upcoming1_num = [5, 6]
-upcoming2_num = [7, 8]
-upcoming3_num = [9, 10]
-upcoming4_num = [11, 12]
-event_num = random.randrange(1,3,1)
-assets_folder = os.path.join("assets")
-
-#set up window
-window = tk.Tk()
-window.title("Virtual Ragdoll Catcafe") 
-window.geometry('1024x1024+' + str(x) + "+" + str(y))
-
-#create a list of frames
-def create_images(str):
-    gif_path = os.path.join(assets_folder, str)
-    original_gif = Image.open(gif_path)
-
-    frames = []
-    try:
-        while True:
-            frames.append(original_gif.copy())
-            original_gif.seek(len(frames))  # Move to the next frame
-    except EOFError:
-        pass
-    
-    return [ImageTk.PhotoImage(frame) for frame in frames]
-
-#set up frames for each action
-tail_images = create_images("tail40.gif")
-blink_images = create_images("blink50.gif")
-upcoming1_images = create_images("tail40.gif")
-upcoming2_images = create_images("blink50.gif")
-upcoming3_images = create_images("tail40.gif")
-upcoming4_images = create_images("blink50.gif")
-
-#make gif work
-def gif_work(progress, frames, event_num):
-    if progress < len(frames) -1:
-        progress += 1
-    else:
-        progress = 0
-        event_num = random.randrange(1, 13, 1)
-    return progress, event_num
-
-#change event
-def change_event(progress, status, event_num, x):
-    #tail
-    if status == 0:
-        frame = tail_images[progress]
-        progress, event_num = gif_work(progress, tail_images, event_num)
-
-    #blink
-    elif status == 1:
-        frame = blink_images[progress]
-        progress, event_num = gif_work(progress, blink_images, event_num)
+class VirtualRagdollCatcafe(tk.Toplevel):
+    def __init__(self):
+        super().__init__()
         
-    #upcoming1
-    elif status == 2:
-        frame = upcoming1_images[progress]
-        progress, event_num = gif_work(progress, upcoming1_images, event_num)
-
-    #upcoming2
-    elif status == 3:
-        frame = upcoming2_images[progress]
-        progress, event_num = gif_work(progress, upcoming2_images, event_num)
-
-    #upcoming3
-    elif status == 4:
-        frame = upcoming3_images[progress]
-        progress, event_num = gif_work(progress, upcoming3_images, event_num)
         
-    #upcoming4
-    else:
-        frame = upcoming4_images[progress]
-        progress, event_num = gif_work(progress, upcoming4_images, event_num)
-    
-    label.configure(image = frame)
-    window.after(1, create_event, progress, status, event_num, x)
+        
+        self.x = 1400
+        self.y = 500
+        self.status = 1
+        self.progress = 0
+        self.tail_num = [1, 2]
+        self.blink_num = [3, 4]
+        self.upcoming1_num = [5, 6]
+        self.upcoming2_num = [7, 8]
+        self.upcoming3_num = [9, 10]
+        self.upcoming4_num = [11, 12]
+        self.event_num = random.randrange(1, 3, 1)
+        self.assets_folder = os.path.join("assets")
 
-#create event
-def create_event(progress, status, event_num, x):
-    if event_num in tail_num:
-        status = 0
-        print('tail')
+        self.title("Virtual Ragdoll Catcafe")
+        self.geometry(f'1024x1024+{self.x}+{self.y}')
 
-    elif event_num in blink_num:
-        status = 1
-        print('blink')
+        self.tail_images = self.create_images("tail40.gif")
+        self.blink_images = self.create_images("blink50.gif")
+        self.upcoming1_images = self.create_images("tail40.gif")
+        self.upcoming2_images = self.create_images("blink50.gif")
+        self.upcoming3_images = self.create_images("tail40.gif")
+        self.upcoming4_images = self.create_images("blink50.gif")
 
-    elif event_num in upcoming1_num:
-        status = 2
-        print('upcoming1')
+        self.label = tk.Label(self, bd=0, bg='black')
+        self.label.pack()  
 
-    elif event_num in upcoming2_num:
-        status = 3
-        print('upcoming2')
-    
-    elif event_num in upcoming3_num:
-        status = 4
-        print('upcoming3')
+        self.config(highlightbackground='black')
+        self.overrideredirect(True)
 
-    elif event_num in upcoming4_num:
-        status = 5
-        print('upcoming4')
-    
-    window.after(100, change_event, progress, status, event_num, x)
+        self.bind("<ButtonPress-1>", self.start_drag)
+        self.bind("<B1-Motion>", self.drag)
+        self.bind("<Configure>", self.resize)
 
-#track the initial position for dragging the pet
-def start_drag(event):
-    global x, y
-    x = event.x
-    y = event.y
+        self.image = self.tail_images[0]  # Assign the initial image reference
+        self.label.config(image=self.image)
+        self.change_event(self.progress, self.status, self.event_num, self.x)
 
-#update the window position while dragging
-def drag(event):
-    global x, y
-    window.geometry(f"+{event.x_root - x}+{event.y_root - y}")
+        self.mainloop()
 
-#resize window(to do)
-def resize(event):
-    width = event.width
-    height = event.height
-    window.geometry(f"{width}x{height}")
+    def create_images(self, filename):
+        gif_path = os.path.join(self.assets_folder, filename)
+        original_gif = Image.open(gif_path)
 
-# Bind the mouse events to the window
-window.bind("<ButtonPress-1>", start_drag)
-window.bind("<B1-Motion>", drag)
-window.bind("<Configure>", resize)
-    
-#create a label;
-label = tk.Label(window, bd = 0, bg = 'black')
-label.pack()  
+        frames = []
+        try:
+            while True:
+                frames.append(original_gif.copy())
+                original_gif.seek(len(frames))  # Move to the next frame
+        except EOFError:
+            pass
 
-window.config(highlightbackground='black')
-window.overrideredirect(True)
-#window.wm_attributes('-transparentcolor','black')
+        return [ImageTk.PhotoImage(frame) for frame in frames]
 
-#loop and end program
-window.after(1, change_event, progress, status, event_num, x)
-window.mainloop()
+    def gif_work(self, progress, frames):
+        if progress < len(frames) - 1:
+            progress += 1
+        else:
+            progress = 0
+            self.event_num = self.get_random_event_num()
+        return progress
+
+    def change_event(self, progress, status, event_num, x):
+        if event_num in self.tail_num:
+            self.status = 0
+            frames = self.tail_images
+            print('tail')
+        elif event_num in self.blink_num:
+            self.status = 1
+            frames = self.blink_images
+            print('blink')
+        elif event_num in self.upcoming1_num:
+            self.status = 2
+            frames = self.upcoming1_images
+            print('upcoming1')
+        elif event_num in self.upcoming2_num:
+            self.status = 3
+            frames = self.upcoming2_images
+            print('upcoming2')
+        elif event_num in self.upcoming3_num:
+            self.status = 4
+            frames = self.upcoming3_images
+            print('upcoming3')
+        elif event_num in self.upcoming4_num:
+            self.status = 5
+            frames = self.upcoming4_images
+
+        self.progress = self.gif_work(progress, frames)
+        self.image = frames[self.progress]  # Assign the current image reference
+        self.label.config(image=self.image)
+        self.after(100, self.change_event, self.progress, self.status, self.event_num, self.x)
+
+
+    def get_random_event_num(self):
+        return random.randrange(1, 13, 1)
+
+    def start_drag(self, event):
+        self.x = event.x
+        self.y = event.y
+
+    def drag(self, event):
+        self.geometry(f"+{event.x_root - self.x}+{event.y_root - self.y}")
+
+    def resize(self, event):
+        width = event.width
+        height = event.height
+        self.geometry(f"{width}x{height}")
+
+
+
