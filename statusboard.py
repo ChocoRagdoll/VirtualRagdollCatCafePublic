@@ -3,6 +3,7 @@ from tkinter import ttk, messagebox
 import googletrans as gt
 import textblob as tb
 from PIL import ImageTk, Image
+from todopage import TodoPage
 
 BABY_PINK = "#f8c6c7"
 WHITE_PINK = "#faedf5"
@@ -67,7 +68,9 @@ class Functions(tk.Frame):
         self.chat_photo = None
         self.translate_photo = None
         self.cust_photo = None
-        self.todoF_photo = None
+        self.translateF_photo = None
+        self.trans_photo = None
+        self.clear_photo = None
         self.create_tabs()
 
     def show_label(self, label, page):
@@ -181,92 +184,10 @@ class Functions(tk.Frame):
 
     #todo list page
     def todo_page(self):
-        todo_frame = tk.Frame(self.main, bg=WHITE_PINK)
-        todo_frame.pack(side=tk.BOTTOM)
-        todo_frame.propagate(False)
-        todo_frame.configure(width=1000, height=640)
-        todoF_image = Image.open(path + "todoF.png")
-        todoF_image = todoF_image.resize((1000, 640))
-        self.todoF_photo = ImageTk.PhotoImage(todoF_image)
-        todoF_label = tk.Label(todo_frame, image=self.todoF_photo)
-        todoF_label.pack()
-
-        #task box
-        task_box = tk.Listbox(todo_frame,
-                        font=("Calibri", 40, "italic", "bold"),
-                        height=8,
-                        bd=0,
-                        width=16)
-
-        task_box.place(x=30, y=190)
-
-        #new task
-        new_task = tk.Text(todo_frame,
-                        font=("Calibri", 30, "bold"),
-                        bd=0,
-                        height=5,
-                        width=18)
-
-        new_task.place(x=560, y=200)
-
-        #add task function
-        def add_task():
-            tasks = new_task.get(1.0, tk.END)
-            task_box.insert(tk.END, tasks)
-            with open("tasks.txt", "a") as file:
-                file.write(tasks)
-                file.seek(0)
-                file.close()
-            new_task.delete(1.0, tk.END)
-
-        #delete task function
-        def delete_task():
-            deleted = task_box.curselection()
-            look = task_box.get(deleted)
-            with open("tasks.txt", "r+") as file:
-                new_file = file.readlines()
-                file.seek(0)
-                for line in new_file:
-                    task = str(look)
-                    if task not in line:
-                        file.write(line)
-                file.truncate()
-            task_box.delete(deleted)
-
-        with open("tasks.txt", "r") as f:
-            read = f.readlines()
-            for i in read:
-                ready = i.split()
-                task_box.insert(tk.END, ready)
-            f.close()
-
-        #add button
-        add_button = tk.Button(todo_frame,
-                               text = "Add",
-                               font=("Calibri", 40, "bold"),
-                               bd=0,
-                               height=1,
-                               width=10,
-                               bg=HOT_PINK,
-                               fg=WHITE,
-                               command=add_task)
-
-        add_button.place(x=600, y=420)
-
-        #delete button
-        delete_button = tk.Button(todo_frame,
-                               text = "Delete",
-                               font=("Calibri", 40, "bold"),
-                               bd=0,
-                               height=1,
-                               width=10,
-                               bg=HOT_PINK,
-                               fg=WHITE,
-                               command=delete_task)
-
-        delete_button.place(x=600, y=520)
-                                                                                         
- 
+        todo_page = TodoPage(self.main)
+        
+       
+    #chat page                                                                                     
     def chat_page(self):
         chat_frame = tk.Frame(self.main, bg=WHITE_PINK)
         chat_frame.pack(side=tk.BOTTOM)
@@ -275,11 +196,17 @@ class Functions(tk.Frame):
         lb3 = tk.Label(chat_frame,text = "CHAT", font=("Calibri", 30, "bold"))
         lb3.pack()
 
+    #translate page
     def translate_page(self):
         translate_frame = tk.Frame(self.main, bg=WHITE_PINK)
         translate_frame.pack(side=tk.BOTTOM)
         translate_frame.propagate(False)
         translate_frame.configure(width=1000, height=640)
+        translateF_image = Image.open(path + "translateF.png")
+        translateF_image = translateF_image.resize((1000, 640))
+        self.translateF_photo = ImageTk.PhotoImage(translateF_image)
+        translateF_label = tk.Label(translate_frame, image=self.translateF_photo)
+        translateF_label.pack()
 
         languages = gt.LANGUAGES
         lan_list = list(languages.values())
@@ -287,18 +214,18 @@ class Functions(tk.Frame):
         #originial text
         original_text = tk.Text(translate_frame,
                              font=("Calibri", 20),
-                             height=16,
-                             width=30)
+                             height=9,
+                             width=27)
 
-        original_text.place(x=30, y=20)
+        original_text.place(x=60, y=165)
               
         #translated text
         translated_text = tk.Text(translate_frame,
                                   font=("Calibri", 20),
-                                  height=16,
-                                  width=30)
+                                  height=9,
+                                  width=27)
 
-        translated_text.place(x=530, y=20)
+        translated_text.place(x=560, y=165)
 
         #original combobox
         original_combo = ttk.Combobox(translate_frame,
@@ -306,7 +233,7 @@ class Functions(tk.Frame):
                                      value=lan_list)
 
         original_combo.current(1)
-        original_combo.place(x=70, y=430)
+        original_combo.place(x=80, y=460)
 
         #translated combobox
         translated_combo = ttk.Combobox(translate_frame,
@@ -314,29 +241,30 @@ class Functions(tk.Frame):
                                         value=lan_list)
 
         translated_combo.current(1)
-        translated_combo.place(x=570, y=430)
+        translated_combo.place(x=580, y=460)
 
         #clear button
+        clear_image = Image.open(path + "clear.png")
+        clear_image = clear_image.resize((150, 50))
+        self.clear_photo = ImageTk.PhotoImage(clear_image)
+        
         clear_button = tk.Button(translate_frame,
-                                 text="Clear",
-                                 font=("Calibri", 40, "bold"),
-                                 bd=0,
-                                 bg=HOT_PINK,
-                                 fg=WHITE,
+                                 image=self.clear_photo,
                                  command=lambda: clear())
 
-        clear_button.place(x=400, y=550)
+        clear_button.place(x=430, y=570)
 
         #translate button
-        translate_button = tk.Button(translate_frame,
-                                     text = "Translate",
-                                     font=("Calibri", 40, "bold"),
-                                     bd=0,
-                                     bg=HOT_PINK,
-                                     fg=WHITE,
-                                     command=lambda: translate())
+        trans_image = Image.open(path + "trans.png")
+        trans_image = trans_image.resize((240, 60))
+        self.trans_photo = ImageTk.PhotoImage(trans_image)
 
-        translate_button.place(x=360, y=480)
+        
+        trans_button = tk.Button(translate_frame,
+                                 image=self.trans_photo,
+                                 command=lambda: translate())
+
+        trans_button.place(x=380, y=500)
 
         #translate function
         def translate():
