@@ -28,6 +28,7 @@ class TodoPage:
         self.todo_frame.pack(side=BOTTOM)
         self.todo_frame.propagate(False)
         self.todo_frame.configure(width=1000, height=640)
+
         self.todoF_photo = ImageTk.PhotoImage(Image.open(path + "todoF.png").resize((1000, 640)))
         Label(self.todo_frame, image=self.todoF_photo).pack()
 
@@ -47,6 +48,7 @@ class TodoPage:
                              width=18)
 
         self.new_task.place(x=560, y=200)
+        
 
         btn_txt = (
             'History',
@@ -62,6 +64,7 @@ class TodoPage:
             lambda: self.mark_as_complete(self.task_box.get(ACTIVE))
         )
 
+        
         for i in range(len(btn_txt)):
             Button(
                 self.todo_frame,
@@ -197,5 +200,7 @@ class TodoPage:
         for t in tasks_0:
             self.task_box.insert(END, t[0])
 
+
+#TodoPage(Tk())
 
         
