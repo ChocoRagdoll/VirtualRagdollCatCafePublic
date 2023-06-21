@@ -34,8 +34,6 @@ class StatusBoard(tk.Tk):
         #options Widge
         self.functions = Functions(self, self.control_bar, self.main)
 
-        self.pet =  VirtualRagdollCatcafe()
-
 
         #run
         self.mainloop()

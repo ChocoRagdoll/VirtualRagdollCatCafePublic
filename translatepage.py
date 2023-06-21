@@ -111,26 +111,3 @@ class TranslatePage:
         translated_text.delete(1.0, tk.END)
 
 #TranslatePage(tk.Tk())
-
-
-
-
-        
-        
-
-        
-
-        
-
-        
-
-        
-
-       
-
-
-
-
-        
-
-        

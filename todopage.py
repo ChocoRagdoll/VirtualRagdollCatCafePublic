@@ -38,7 +38,7 @@ class TodoPage:
                                 height=8,
                                 bd=0,
                                 width=16)
-        self.task_box.place(x=30, y=190)
+        self.task_box.place(x=30, y=200)
 
         # new task
         self.new_task = Text(self.todo_frame,
@@ -47,65 +47,72 @@ class TodoPage:
                              height=5,
                              width=18)
 
-        self.new_task.place(x=560, y=200)
+        self.new_task.place(x=560, y=220)
+
+        #add button
+        add_image = Image.open(path + "add.png")
+        add_image = add_image.resize((160, 60))
+        self.add_photo = ImageTk.PhotoImage(add_image)
         
+        add_button = Button(self.todo_frame,
+                            image=self.add_photo,
+                            command=lambda: self.add_task()).place(x=570, y=430)
 
-        btn_txt = (
-            'History',
-            'Add',
-            'Delete',
-            'Complete'
-        )
-
-        btn_command = (
-            self.show_history,
-            self.add_task,
-            self.delete_task,
-            lambda: self.mark_as_complete(self.task_box.get(ACTIVE))
-        )
-
+        #delete button
+        delete_image = Image.open(path + "delete.png")
+        delete_image = delete_image.resize((160, 60))
+        self.delete_photo = ImageTk.PhotoImage(delete_image)
         
-        for i in range(len(btn_txt)):
-            Button(
-                self.todo_frame,
-                text=btn_txt[i],
-                font=("Calibri", 40, "bold"),
-                bd=0,
-                height=1,
-                width=10,
-                bg=HOT_PINK,
-                fg=WHITE,
-                command=btn_command[i]
-            ).place(x=600, y=320 + i * 100)
+        delete_button = Button(self.todo_frame,
+                               image=self.delete_photo,
+                               command=lambda: self.delete_task()).place(x=790, y=430)
+
+        #complete button
+        complete_image = Image.open(path + "complete.png")
+        complete_image = complete_image.resize((180, 50))
+        self.complete_photo = ImageTk.PhotoImage(complete_image)
+        
+        complete_button = Button(self.todo_frame,
+                                 image=self.complete_photo,
+                                 command=lambda: self.mark_as_complete(self.task_box.get(ACTIVE))).place(x=560, y=530)
+
+        #history button
+        history_image = Image.open(path + "history.png")
+        history_image = history_image.resize((180, 50))
+        self.history_photo = ImageTk.PhotoImage(history_image)
+        
+        history_button = Button(self.todo_frame,
+                                 image=self.history_photo,
+                                 command=lambda: self.show_history()).place(x=780, y=530)
+
 
     def create_history_frame(self):
         self.history_frame = Frame(self.root, bg=WHITE_PINK)
-        # history_frame.pack(side=tk.BOTTOM)
         self.history_frame.propagate(False)
         self.history_frame.configure(width=1000, height=640)
-        Label(self.history_frame, image=self.todoF_photo).pack()
+
+        self.historyF_photo = ImageTk.PhotoImage(Image.open(path + "historyF.png").resize((1000, 640)))
+        Label(self.history_frame, image=self.historyF_photo).pack()
+        
 
         # Create a Listbox to display the completed tasks
         self.completed_tasks_box = Listbox(
             self.history_frame,
             font=("Calibri", 40, "italic", "bold"),
-            height=8,
+            height=9,
             bd=0,
-            width=16
+            width=20
         )
-        self.completed_tasks_box.place(x=30, y=190)
+        self.completed_tasks_box.place(x=50, y=140)
 
-        Button(
-            self.history_frame,
-            text="Back",
-            font=("Calibri", 40, "bold"),
-            bd=0,
-            height=1,
-            width=10,
-            bg=HOT_PINK,
-            fg=WHITE,
-            command=self.go_back
-        ).place(x=600, y=320)
+        #back button
+        back_image = Image.open(path + "back.png")
+        back_image = back_image.resize((240, 90))
+        self.back_photo = ImageTk.PhotoImage(back_image)
+        
+        delete_button = Button(self.history_frame,
+                               image=self.back_photo,
+                               command=lambda: self.go_back()).place(x=670, y=510)
 
     def go_back(self):
         self.todo_frame.pack(side=BOTTOM)
@@ -202,5 +209,3 @@ class TodoPage:
 
 
 #TodoPage(Tk())
-
-        

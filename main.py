@@ -94,6 +94,7 @@ class VirtualRagdollCatcafe(tk.Toplevel):
         elif event_num in self.upcoming4_num:
             self.status = 5
             frames = self.upcoming4_images
+            print('upcoming4')
 
         self.progress = self.gif_work(progress, frames)
         self.image = frames[self.progress]  # Assign the current image reference
