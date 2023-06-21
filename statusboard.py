@@ -7,7 +7,7 @@ import random
 from PIL import ImageTk, Image
 from todopage import TodoPage
 from translatepage import TranslatePage
-from main import VirtualRagdollCatcafe
+from chatpage import ChatPage
 
 
 BABY_PINK = "#f8c6c7"
@@ -15,6 +15,7 @@ WHITE_PINK = "#faedf5"
 WHITE = "#fcfafb"
 HOT_PINK = "#f37af5"
 BROWN = "#9d6e6f"
+GREY = "#968b8a"
 path = "/Users/chengege/Downloads/"
 
 class StatusBoard(tk.Tk):
@@ -194,12 +195,7 @@ class Functions(tk.Frame):
        
     #chat page                                                                                     
     def chat_page(self):
-        chat_frame = tk.Frame(self.main, bg=WHITE_PINK)
-        chat_frame.pack(side=tk.BOTTOM)
-        chat_frame.propagate(False)
-        chat_frame.configure(width=1000, height=640)
-        lb3 = tk.Label(chat_frame,text = "CHAT", font=("Calibri", 30, "bold"))
-        lb3.pack()
+        chat_page = ChatPage(self.main)
 
     #translate page
     def translate_page(self):

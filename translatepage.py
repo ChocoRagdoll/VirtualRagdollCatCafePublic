@@ -11,6 +11,7 @@ WHITE_PINK = "#faedf5"
 WHITE = "#fcfafb"
 HOT_PINK = "#f37af5"
 BROWN = "#9d6e6f"
+GREY = "#968b8a"
 path = "/Users/chengege/Downloads/"
 
 class TranslatePage:

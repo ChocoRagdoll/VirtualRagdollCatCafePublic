@@ -117,5 +117,4 @@ class VirtualRagdollCatcafe(tk.Toplevel):
         height = event.height
         self.geometry(f"{width}x{height}")
 
-
-
+#VirtualRagdollCatcafe()
