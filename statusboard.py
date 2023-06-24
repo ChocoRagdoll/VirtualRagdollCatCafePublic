@@ -18,7 +18,7 @@ BROWN = "#9d6e6f"
 GREY = "#968b8a"
 #path = "C:/Chrome Downloads/assets/"
 
-class StatusBoard(tk.Tk):
+class StatusBoard(tk.Toplevel):
     def __init__(self):
 
         #main setup
@@ -34,7 +34,6 @@ class StatusBoard(tk.Tk):
         
         #options Widge
         self.functions = Functions(self, self.control_bar, self.main)
-
 
         #run
         self.mainloop()
@@ -53,12 +52,17 @@ class Main(tk.Frame):
         self.pack(side=tk.BOTTOM)
         self.pack_propagate(False)
         self.configure(width=1000, height=640)
-        self.open_image = Image.open(Functions.file_path("open_background.png"))
+
+        self.open_image = Image.open(os.path.join("assets", "open_background.png"))
         #path + "open_background.png"
         self.open_image = self.open_image.resize((1000, 640))
         self.open_photo = ImageTk.PhotoImage(self.open_image)
+
         #tk.Label(self, image=self.open_photo).pack()
-        self.background_label = tk.Label(self, image=self.open_photo)
+        #self.background_label = tk.Label(self, image=self.open_photo)
+        self.background_label = tk.Label(self)
+        self.background_label.image = self.open_photo
+        self.background_label.configure(image=self.open_photo)
         self.background_label.pack()
 
 
@@ -227,9 +231,6 @@ class Functions(tk.Frame):
                                   
                                      
 
-
-
-      
 
 if __name__ == "__main__":  
     StatusBoard()

@@ -5,6 +5,7 @@ import tkinter as tk
 from PIL import Image, ImageTk
 import send2trash
 from tkinterdnd2 import DND_FILES, TkinterDnD
+from statusboard import StatusBoard, ControlBar, Main, Functions
 
 class VirtualRagdollCatcafe(tk.Toplevel):
     def __init__(self):
@@ -45,6 +46,7 @@ class VirtualRagdollCatcafe(tk.Toplevel):
         self.bind("<ButtonPress-1>", self.start_drag)
         self.bind("<B1-Motion>", self.drag)
         self.bind("<Configure>", self.resize)
+        self.bind("<Double-Button-1>", self.open_status_board)
 
         self.image = self.tail_images[0]  # Assign the initial image reference
         self.label.config(image=self.image)
@@ -131,6 +133,14 @@ class VirtualRagdollCatcafe(tk.Toplevel):
             print(f"File '{file_path}' put to recycle bin.")
         except OSError as e:
             print(f"Error deleting file '{file_path}': {e}")
+
+    def open_status_board(self, event):
+        # Create an instance of the status board window
+        status_board = StatusBoard()
+
+        # Position the status board above the cat
+        cat_position = self.cat_label.winfo_rootx(), self.cat_label.winfo_rooty()
+        status_board.geometry(f"+{cat_position[0]}+{cat_position[1] - status_board.winfo_height()}")
 
     def start_drag(self, event):
         self.x = event.x
