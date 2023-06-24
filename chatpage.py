@@ -10,7 +10,7 @@ WHITE = "#fcfafb"
 HOT_PINK = "#f37af5"
 BROWN = "#9d6e6f"
 GREY = "#968b8a"
-path = "/Users/chengege/Downloads/"
+#path = "/Users/chengege/Downloads/"
 openai.api_key = "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"
 
 
@@ -27,7 +27,8 @@ class ChatPage:
         self.chat_frame.pack(side=tk.BOTTOM)
         self.chat_frame.propagate(False)
         self.chat_frame.configure(width=1000, height=640)
-        self.chatF_photo = ImageTk.PhotoImage(Image.open(path + "chatF.png").resize((1000, 640)))
+        self.chatF_photo = ImageTk.PhotoImage(Image.open(self.file_path("chatF.png")).resize((1000, 640)))
+        #path + "chatF.png"
         tk.Label(self.chat_frame, image=self.chatF_photo).pack()
 
         #chatbox
@@ -53,7 +54,8 @@ class ChatPage:
         self.user_input.bind('<Return>', self.on_enter)
 
         #chat button
-        chat_image = Image.open(path + "send.png")
+        chat_image = Image.open(self.file_path("send.png"))
+        #path + "send.png"
         chat_image = chat_image.resize((210, 70))
         self.chat_photo = ImageTk.PhotoImage(chat_image)
         
@@ -88,6 +90,11 @@ class ChatPage:
         self.chat_box.configure(state='normal')
         self.chat_box.insert(tk.END, message + "\n", color)
         self.chat_box.configure(state='disabled')
+    
+    def file_path(self, filename):
+        assets_folder = os.path.join("assets")
+        path = os.path.join(assets_folder, filename)
+        return path
 
 #ChatPage(tk.Tk())
 

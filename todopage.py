@@ -1,3 +1,4 @@
+import os
 from tkinter import *
 from PIL import ImageTk, Image
 import mysql.connector
@@ -8,9 +9,9 @@ WHITE = "#fcfafb"
 HOT_PINK = "#f37af5"
 BROWN = "#9d6e6f"
 GREY = "#968b8a"
-path = "/Users/chengege/Downloads/"
+#path = "C:/Chrome Downloads/assets/"
 user = "root"
-password = "ABC200104.0090u"
+password = "20020208Xs"
 
 class TodoPage:
     def __init__(self, root):
@@ -30,7 +31,8 @@ class TodoPage:
         self.todo_frame.propagate(False)
         self.todo_frame.configure(width=1000, height=640)
 
-        self.todoF_photo = ImageTk.PhotoImage(Image.open(path + "todoF.png").resize((1000, 640)))
+        self.todoF_photo = ImageTk.PhotoImage(Image.open(self.file_path("todoF.png")).resize((1000, 640)))
+        #path + "todoF.png"
         Label(self.todo_frame, image=self.todoF_photo).pack()
 
         # task box
@@ -51,7 +53,8 @@ class TodoPage:
         self.new_task.place(x=560, y=220)
 
         #add button
-        add_image = Image.open(path + "add.png")
+        add_image = Image.open(self.file_path("add.png"))
+        #path + "add.png"
         add_image = add_image.resize((160, 60))
         self.add_photo = ImageTk.PhotoImage(add_image)
         
@@ -60,7 +63,8 @@ class TodoPage:
                             command=lambda: self.add_task()).place(x=570, y=430)
 
         #delete button
-        delete_image = Image.open(path + "delete.png")
+        delete_image = Image.open(self.file_path("delete.png"))
+        #path + "delete.png"
         delete_image = delete_image.resize((160, 60))
         self.delete_photo = ImageTk.PhotoImage(delete_image)
         
@@ -69,7 +73,8 @@ class TodoPage:
                                command=lambda: self.delete_task()).place(x=790, y=430)
 
         #complete button
-        complete_image = Image.open(path + "complete.png")
+        complete_image = Image.open(self.file_path("complete.png"))
+        #path + "complete.png"
         complete_image = complete_image.resize((180, 50))
         self.complete_photo = ImageTk.PhotoImage(complete_image)
         
@@ -78,7 +83,8 @@ class TodoPage:
                                  command=lambda: self.mark_as_complete(self.task_box.get(ACTIVE))).place(x=560, y=530)
 
         #history button
-        history_image = Image.open(path + "history.png")
+        history_image = Image.open(self.file_path("history.png"))
+        #path + "history.png"
         history_image = history_image.resize((180, 50))
         self.history_photo = ImageTk.PhotoImage(history_image)
         
@@ -92,7 +98,8 @@ class TodoPage:
         self.history_frame.propagate(False)
         self.history_frame.configure(width=1000, height=640)
 
-        self.historyF_photo = ImageTk.PhotoImage(Image.open(path + "historyF.png").resize((1000, 640)))
+        self.historyF_photo = ImageTk.PhotoImage(Image.open(self.file_path("historyF.png")).resize((1000, 640)))
+        #path + "historyF.png"
         Label(self.history_frame, image=self.historyF_photo).pack()
         
 
@@ -107,7 +114,8 @@ class TodoPage:
         self.completed_tasks_box.place(x=50, y=140)
 
         #back button
-        back_image = Image.open(path + "back.png")
+        back_image = Image.open(self.file_path("back.png"))
+        #path + "back.png"
         back_image = back_image.resize((240, 90))
         self.back_photo = ImageTk.PhotoImage(back_image)
         
@@ -207,6 +215,11 @@ class TodoPage:
         # Iterate through the tasks and insert them into the task box
         for t in tasks_0:
             self.task_box.insert(END, t[0])
+
+    def file_path(self, filename):
+        assets_folder = os.path.join("assets")
+        path = os.path.join(assets_folder, filename)
+        return path
 
 
 #TodoPage(Tk())

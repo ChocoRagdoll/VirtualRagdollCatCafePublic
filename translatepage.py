@@ -1,3 +1,4 @@
+import os
 from PIL import ImageTk, Image
 import tkinter as tk
 from tkinter import ttk, messagebox
@@ -12,7 +13,7 @@ WHITE = "#fcfafb"
 HOT_PINK = "#f37af5"
 BROWN = "#9d6e6f"
 GREY = "#968b8a"
-path = "/Users/chengege/Downloads/"
+#path = "C:/Chrome Downloads/assets/"
 
 class TranslatePage:
     def __init__(self, root):
@@ -28,7 +29,8 @@ class TranslatePage:
         self.translate_frame.propagate(False)
         self.translate_frame.configure(width=1000, height=640)
 
-        self.translateF_photo = ImageTk.PhotoImage(Image.open(path + "translateF.png").resize((1000, 640)))
+        self.translateF_photo = ImageTk.PhotoImage(Image.open(self.file_path("translateF.png")).resize((1000, 640)))
+        #path + "translateF.png"
         tk.Label(self.translate_frame, image=self.translateF_photo).pack()
 
         
@@ -69,7 +71,8 @@ class TranslatePage:
         translated_combo.place(x=580, y=460)
 
         #clear button
-        clear_image = Image.open(path + "clear.png")
+        clear_image = Image.open(self.file_path("clear.png"))
+        #path + "clear.png"
         clear_image = clear_image.resize((150, 50))
         self.clear_photo = ImageTk.PhotoImage(clear_image)
         
@@ -79,7 +82,8 @@ class TranslatePage:
 
 
         #translate button
-        trans_image = Image.open(path + "trans.png")
+        trans_image = Image.open(self.file_path("trans.png"))
+        #path + "trans.png"
         trans_image = trans_image.resize((240, 60))
         self.trans_photo = ImageTk.PhotoImage(trans_image)
 
@@ -111,4 +115,10 @@ class TranslatePage:
         original_text.delete(1.0, tk.END)
         translated_text.delete(1.0, tk.END)
 
+    def file_path(self, filename):
+        assets_folder = os.path.join("assets")
+        path = os.path.join(assets_folder, filename)
+        return path
+        
+    
 #TranslatePage(tk.Tk())

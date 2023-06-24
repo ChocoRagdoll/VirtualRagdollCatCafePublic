@@ -16,7 +16,7 @@ WHITE = "#fcfafb"
 HOT_PINK = "#f37af5"
 BROWN = "#9d6e6f"
 GREY = "#968b8a"
-path = "/Users/chengege/Downloads/"
+#path = "C:/Chrome Downloads/assets/"
 
 class StatusBoard(tk.Tk):
     def __init__(self):
@@ -53,10 +53,13 @@ class Main(tk.Frame):
         self.pack(side=tk.BOTTOM)
         self.pack_propagate(False)
         self.configure(width=1000, height=640)
-        self.open_image = Image.open(path + "open_background.png")
+        self.open_image = Image.open(Functions.file_path("open_background.png"))
+        #path + "open_background.png"
         self.open_image = self.open_image.resize((1000, 640))
         self.open_photo = ImageTk.PhotoImage(self.open_image)
-        tk.Label(self, image=self.open_photo).pack()
+        #tk.Label(self, image=self.open_photo).pack()
+        self.background_label = tk.Label(self, image=self.open_photo)
+        self.background_label.pack()
 
 
 class Functions(tk.Frame):
@@ -124,7 +127,8 @@ class Functions(tk.Frame):
         self.cust_label.place(x=730, y=50, width=186, height=5)
 
         #home button
-        home_image = Image.open(path + "home.png")
+        home_image = Image.open(Functions.file_path("home.png"))
+        #path + "home.png"
         home_image = home_image.resize((110, 40))
         self.home_photo = ImageTk.PhotoImage(home_image)
         
@@ -135,7 +139,8 @@ class Functions(tk.Frame):
         home_button.place(x=15, y=4)                        
 
         #todo list button
-        todo_image = Image.open(path + "todo.png")
+        todo_image = Image.open(Functions.file_path("todo.png"))
+        #path + "todo.png"
         todo_image = todo_image.resize((110, 40))
         self.todo_photo = ImageTk.PhotoImage(todo_image)
         
@@ -146,7 +151,8 @@ class Functions(tk.Frame):
         todo_button.place(x=180, y=4)
         
         #chat button
-        chat_image = Image.open(path + "chat.png")
+        chat_image = Image.open(Functions.file_path("chat.png"))
+        #path + "chat.png"
         chat_image = chat_image.resize((110, 40))
         self.chat_photo = ImageTk.PhotoImage(chat_image)
         
@@ -157,7 +163,8 @@ class Functions(tk.Frame):
         chat_button.place(x=345, y=4)
 
         #translate button
-        translate_image = Image.open(path + "translate.png")
+        translate_image = Image.open(Functions.file_path("translate.png"))
+        #path + "translate.png"
         translate_image = translate_image.resize((170, 40))
         self.translate_photo = ImageTk.PhotoImage(translate_image)
         
@@ -168,7 +175,8 @@ class Functions(tk.Frame):
         translate_button.place(x=510, y=4)
 
         #customisation button
-        cust_image = Image.open(path + "customisation.png")
+        cust_image = Image.open(Functions.file_path("customisation.png"))
+        #path + "customisation.png"
         cust_image = cust_image.resize((180, 40))
         self.cust_photo = ImageTk.PhotoImage(cust_image)
         
@@ -212,7 +220,10 @@ class Functions(tk.Frame):
         lb5.pack()
                                         
         
-        
+    def file_path(filename):
+        assets_folder = os.path.join("assets")
+        path = os.path.join(assets_folder, filename)
+        return path   
                                   
                                      
 
