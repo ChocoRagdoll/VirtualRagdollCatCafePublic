@@ -35,40 +35,40 @@ class TranslatePage:
 
         
 
-        languages = gt.LANGUAGES
-        lan_list = list(languages.values())
+        self.languages = gt.LANGUAGES
+        self.lan_list = list(self.languages.values())
 
         #originial text
-        original_text = tk.Text(self.translate_frame,
+        self.original_text = tk.Text(self.translate_frame,
                              font=("Calibri", 20),
                              height=9,
                              width=27)
 
-        original_text.place(x=60, y=165)
+        self.original_text.place(x=60, y=165)
               
         #translated text
-        translated_text = tk.Text(self.translate_frame,
+        self.translated_text = tk.Text(self.translate_frame,
                                        font=("Calibri", 20),
                                        height=9,
                                        width=27)
 
-        translated_text.place(x=560, y=165)
+        self.translated_text.place(x=560, y=165)
 
         #original combobox
-        original_combo = ttk.Combobox(self.translate_frame,
+        self.original_combo = ttk.Combobox(self.translate_frame,
                                        width=30,
-                                       value=lan_list)
+                                       value=self.lan_list)
 
-        original_combo.current(1)
-        original_combo.place(x=80, y=460)
+        self.original_combo.current(1)
+        self.original_combo.place(x=80, y=460)
 
         #translated combobox
-        translated_combo = ttk.Combobox(self.translate_frame,
+        self.translated_combo = ttk.Combobox(self.translate_frame,
                                          width=30,
-                                         value=lan_list)
+                                         value=self.lan_list)
 
-        translated_combo.current(1)
-        translated_combo.place(x=580, y=460)
+        self.translated_combo.current(1)
+        self.translated_combo.place(x=580, y=460)
 
         #clear button
         clear_image = Image.open(self.file_path("clear.png"))
@@ -94,26 +94,26 @@ class TranslatePage:
 
     #translate function
     def translate(self):
-        translated_text.delete(1.0, tk.END)
+        self.translated_text.delete(1.0, tk.END)
         try:
-            for key, value in languages.items():
-                if (value == original_combo.get()):
+            for key, value in self.languages.items():
+                if (value == self.original_combo.get()):
                     from_language = key
 
-            for key, value in languages.items():
-                if (value == translated_combo.get()):
+            for key, value in self.languages.items():
+                if (value == self.translated_combo.get()):
                     to_language = key
 
             text = tb.TextBlob(self.original_text.get(1.0, tk.END))
             text = text.translate(from_lang=from_language, to=to_language)
-            translated_text.insert(1.0, text)
+            self.translated_text.insert(1.0, text)
         except Exception as e:
             messagebox.showerror("Translator", e)
 
     #clear function
     def clear(self):
-        original_text.delete(1.0, tk.END)
-        translated_text.delete(1.0, tk.END)
+        self.original_text.delete(1.0, tk.END)
+        self.translated_text.delete(1.0, tk.END)
 
     def file_path(self, filename):
         assets_folder = os.path.join("assets")
@@ -121,4 +121,5 @@ class TranslatePage:
         return path
         
     
+
 #TranslatePage(tk.Tk())
