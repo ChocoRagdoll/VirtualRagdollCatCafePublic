@@ -6,12 +6,17 @@ from PIL import Image, ImageTk
 import pickle
 
 
+
 BABY_PINK = "#f8c6c7"
 WHITE_PINK = "#faedf5"
-WHITE = "#fcfafb"
+LIGHT_PINK = "#fef3f4"
+WHITE = "#ffffff"
 HOT_PINK = "#f37af5"
 BROWN = "#9d6e6f"
 GREY = "#968b8a"
+PURPLE = "#aea1ba"
+LIGHT_BROWN = "#cfb49f"
+YELLOW = "#ffc331"
 #path = "/Users/chengege/Downloads/"
 
 class HomePage:
@@ -36,15 +41,19 @@ class HomePage:
         self.homeF_photo = ImageTk.PhotoImage(Image.open(self.file_path("homeF.png")).resize((1000, 640)))
         tk.Label(self.home_frame, image=self.homeF_photo).pack()
 
-        self.experience_bar = ttk.Progressbar(self.home_frame, length=200, mode="determinate")
-        self.experience_bar.place(x=100,y=100)
+        style = ttk.Style()
+        style.theme_use("default")  # Use the default theme
+        style.configure("white.Horizontal.TProgressbar", background=BABY_PINK)
+
+        self.experience_bar = ttk.Progressbar(self.home_frame, style="white.Horizontal.TProgressbar", length=580, mode="determinate")
+        self.experience_bar.place(x=260,y=290)
 
          # Add two labels to display the current experience level and total experience points
-        self.level_label = tk.Label(self.home_frame, text="Level: 1")
-        self.level_label.place(x=100,y=200)
+        self.level_label = tk.Label(self.home_frame, text="1", font=("Helvetica", 90), bg=WHITE)
+        self.level_label.place(x=90,y=310)
         
-        self.total_exp_label = tk.Label(self.home_frame, text="Total Experience: 0")
-        self.total_exp_label.place(x=150,y=200)
+        self.total_exp_label = tk.Label(self.home_frame, text="0", font=("Helvetica", 60), bg=LIGHT_PINK)
+        self.total_exp_label.place(x=460,y=375)
     
     def update_ui(self):
         current_level = self.pet_experience.current_level
@@ -58,8 +67,8 @@ class HomePage:
         self.experience_bar["value"] = normalized_value * 100
 
         # Update the labels with the current experience level and total experience points
-        self.level_label.config(text=f"Level: {self.pet_experience.current_level}")
-        self.total_exp_label.config(text=f"Total Experience: {self.pet_experience.experience}")
+        self.level_label.config(text=f"{self.pet_experience.current_level}")
+        self.total_exp_label.config(text=f"{self.pet_experience.experience}")
 
     def load_pet_data(self):
         try:
