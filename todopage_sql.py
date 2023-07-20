@@ -11,7 +11,8 @@ BROWN = "#9d6e6f"
 GREY = "#968b8a"
 #path = "C:/Chrome Downloads/assets/"
 user = "root"
-password = "20020208Xs"
+#password = "20020208Xs"
+#password = "ABC200104.0090u"
 
 class TodoPage:
     def __init__(self, root):
@@ -149,19 +150,21 @@ class TodoPage:
 
     def init_data(self):
         db_config = {
-            "host": "localhost",
-            "user": user,
-            "password": password,
-            "database": "tasks",
+            'user': 'sql6630612',
+            'password': 'VptXF7SRQz',
+            'host': 'sql6.freesqldatabase.com',
+            'database': 'sql6630612',
+            'raise_on_warnings': True
         }
 
         self.db = mysql.connector.connect(**db_config)
         cursor = self.db.cursor()
         create_table_query = """
         CREATE TABLE IF NOT EXISTS tasks (
-            id INT AUTO_INCREMENT PRIMARY KEY,
+            id INT PRIMARY KEY,
             task VARCHAR(255) NOT NULL,
-            completed BOOLEAN DEFAULT 0
+            completed BOOLEAN DEFAULT 0,
+            foreign key (users_id) references users(id)
         )
         """
         cursor.execute(create_table_query)

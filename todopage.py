@@ -2,7 +2,7 @@ import os
 import tkinter as tk
 from tkinter import *
 from PIL import ImageTk, Image
-import mysql.connector
+# import mysql.connector
 
 BABY_PINK = "#f8c6c7"
 WHITE_PINK = "#faedf5"
@@ -12,10 +12,13 @@ BROWN = "#9d6e6f"
 GREY = "#968b8a"
 
 class TodoPage:
-    def __init__(self, main):
+    def __init__(self, main, pet_experience):
         self.main = main
+        self.pet_experience = pet_experience
 
         self.todo_page()
+
+        
 
     def todo_page(self):
         self.todo_frame = tk.Frame(self.main, bg=WHITE_PINK)
@@ -84,6 +87,9 @@ class TodoPage:
             file.close()
         self.new_task.delete(1.0, tk.END)
 
+        # add exp
+        self.feed_pet()
+
     #delete task function
     def delete_task(self):
         deleted = self.task_box.curselection()
@@ -96,6 +102,9 @@ class TodoPage:
                     file.write(line)
             file.truncate()
         self.task_box.delete(deleted)
+    
+    def feed_pet(self):
+        self.pet_experience.feed()
 
     def file_path(self, filename):
         assets_folder = os.path.join("assets")
@@ -160,5 +169,3 @@ class TodoPage:
 
     delete_button.place(x=600, y=520)
 '''
-
-

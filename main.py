@@ -154,6 +154,7 @@ class VirtualRagdollCatcafe(tk.Toplevel):
         height = event.height
         self.geometry(f"{width}x{height}")
 
+
 if __name__ == "__main__":
     root = TkinterDnD.Tk()
     window = VirtualRagdollCatcafe()

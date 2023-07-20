@@ -8,6 +8,9 @@ from PIL import ImageTk, Image
 from todopage import TodoPage
 from translatepage import TranslatePage
 from chatpage import ChatPage
+from homepage import HomePage
+import pickle
+from petexperience import PetExperience
 
 
 BABY_PINK = "#f8c6c7"
@@ -19,12 +22,14 @@ GREY = "#968b8a"
 #path = "C:/Chrome Downloads/assets/"
 
 class StatusBoard(tk.Toplevel):
-    def __init__(self):
+    def __init__(self, pet_experience):
 
         #main setup
         super().__init__()
         self.title("Status Board")
         self.geometry("1000x700")
+
+        self.pet_experience = pet_experience
 
         #control bar
         self.control_bar = ControlBar(self)
@@ -33,11 +38,11 @@ class StatusBoard(tk.Toplevel):
         self.main = Main(self)
         
         #options Widge
-        self.functions = Functions(self, self.control_bar, self.main)
+        self.functions = Functions(self, self.control_bar, self.main, self.pet_experience)
 
         #run
         self.mainloop()
-        
+    
 
 class ControlBar(tk.Frame):
     def __init__(self, parent):
@@ -67,7 +72,7 @@ class Main(tk.Frame):
 
 
 class Functions(tk.Frame):
-    def __init__(self, parent, control_bar, main):
+    def __init__(self, parent, control_bar, main, pet_experience):
         super().__init__(parent)
         self.control_bar = control_bar
         self.main = main
@@ -85,6 +90,7 @@ class Functions(tk.Frame):
         self.trans_photo = None
         self.clear_photo = None
         self.create_tabs()
+        self.pet_experience = pet_experience
 
     def show_label(self, label, page):
         self.hide_label()
@@ -193,16 +199,11 @@ class Functions(tk.Frame):
         
 
     def home_page(self):
-        home_frame = tk.Frame(self.main, bg=WHITE_PINK)
-        home_frame.pack(side=tk.BOTTOM)
-        home_frame.propagate(False)
-        home_frame.configure(width=1000, height=640)
-        lb = tk.Label(home_frame,text = "HOME", font=("Calibri", 30, "bold"))
-        lb.pack()
+        home_page = HomePage(self.main, self.pet_experience)
 
     #todo list page
     def todo_page(self):
-        todo_page = TodoPage(self.main)
+        todo_page = TodoPage(self.main, self.pet_experience)
         
        
     #chat page                                                                                     
@@ -232,5 +233,6 @@ class Functions(tk.Frame):
                                      
 
 
-if __name__ == "__main__":  
-    StatusBoard()
+if __name__ == "__main__": 
+    pet_experience = PetExperience() 
+    StatusBoard(pet_experience)
