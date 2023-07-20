@@ -31,6 +31,8 @@ class HomePage:
         self.update_ui()
 
         self.pet_experience.register_observer(self)
+
+        
         
     def create_home_frame(self):
         #background
@@ -49,10 +51,10 @@ class HomePage:
         self.experience_bar.place(x=260,y=290)
 
          # Add two labels to display the current experience level and total experience points
-        self.level_label = tk.Label(self.home_frame, text="1", font=("Helvetica", 90), bg=WHITE)
+        self.level_label = tk.Label(self.home_frame, text="1", font=("Helvetica", 90), bg=WHITE, fg=BROWN)
         self.level_label.place(x=90,y=310)
         
-        self.total_exp_label = tk.Label(self.home_frame, text="0", font=("Helvetica", 60), bg=LIGHT_PINK)
+        self.total_exp_label = tk.Label(self.home_frame, text="0", font=("Helvetica", 60), bg=LIGHT_PINK, fg=BROWN)
         self.total_exp_label.place(x=460,y=375)
     
     def update_ui(self):
