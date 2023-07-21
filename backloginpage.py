@@ -5,6 +5,7 @@ from PIL import Image, ImageTk
 import mysql.connector
 from statusboard import StatusBoard
 from main import VirtualRagdollCatcafe
+from petexperience import PetExperience
 
 BABY_PINK = "#f8c6c7"
 WHITE_PINK = "#faedf5"
@@ -122,7 +123,8 @@ class BackLoginPage(tk.Tk):
             else:
                 messagebox.showinfo('Success', 'You are Logged in')
                 self.destroy()
-                StatusBoard()
+                pet_experience = PetExperience() 
+                StatusBoard(pet_experience, username, password)
                 #VirtualRagdollCatcafe()
                 
 

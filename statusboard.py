@@ -22,7 +22,7 @@ GREY = "#968b8a"
 #path = "C:/Chrome Downloads/assets/"
 
 class StatusBoard(tk.Toplevel):
-    def __init__(self, pet_experience):
+    def __init__(self, pet_experience, username, password):
 
         #main setup
         super().__init__()
@@ -31,6 +31,10 @@ class StatusBoard(tk.Toplevel):
 
         self.pet_experience = pet_experience
 
+        # username and password
+        self.username = username
+        self.password = password
+
         #control bar
         self.control_bar = ControlBar(self)
 
@@ -38,7 +42,7 @@ class StatusBoard(tk.Toplevel):
         self.main = Main(self)
         
         #options Widge
-        self.functions = Functions(self, self.control_bar, self.main, self.pet_experience)
+        self.functions = Functions(self, self.control_bar, self.main, self.pet_experience, self.username, self.password)
 
         #run
         self.mainloop()
@@ -72,7 +76,7 @@ class Main(tk.Frame):
 
 
 class Functions(tk.Frame):
-    def __init__(self, parent, control_bar, main, pet_experience):
+    def __init__(self, parent, control_bar, main, pet_experience, username, password):
         super().__init__(parent)
         self.control_bar = control_bar
         self.main = main
@@ -91,6 +95,8 @@ class Functions(tk.Frame):
         self.clear_photo = None
         self.create_tabs()
         self.pet_experience = pet_experience
+        self.username = username
+        self.password = password
 
     def show_label(self, label, page):
         self.hide_label()
@@ -197,13 +203,13 @@ class Functions(tk.Frame):
         translate_button.place(x=730, y=4)
 
         
-
+    #home page
     def home_page(self):
         home_page = HomePage(self.main, self.pet_experience)
 
     #todo list page
     def todo_page(self):
-        todo_page = TodoPage(self.main, self.pet_experience)
+        todo_page = TodoPage(self.main, self.pet_experience, self.username, self.password)
         
        
     #chat page                                                                                     
@@ -235,4 +241,4 @@ class Functions(tk.Frame):
 
 if __name__ == "__main__": 
     pet_experience = PetExperience() 
-    StatusBoard(pet_experience)
+    StatusBoard(pet_experience,123, 123)

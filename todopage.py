@@ -12,9 +12,11 @@ BROWN = "#9d6e6f"
 GREY = "#968b8a"
 
 class TodoPage:
-    def __init__(self, main, pet_experience):
+    def __init__(self, main, pet_experience, username, password):
         self.main = main
         self.pet_experience = pet_experience
+        self.username = username
+        self.password = password
 
         self.todo_page()
 
