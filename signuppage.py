@@ -18,12 +18,16 @@ YELLOW = "#ffc331"
 
 
 class SignupPage(tk.Tk):
-    def __init__(self):
+    def __init__(self, pet_experience):
         super().__init__()
         self.title("Signup Page")
         self.geometry("1000x700")
 
+        #pet experience
+        self.pet_experience = pet_experience
+
         self.create_signup_page()
+
     
     def create_signup_page(self):
          #set up background
@@ -135,7 +139,7 @@ class SignupPage(tk.Tk):
             messagebox.showinfo('Success', 'New Account is Created!')
             self.clear()
             self.destroy()
-            BackLoginPage()
+            BackLoginPage(self.pet_experience)
             
     
     def clear(self):

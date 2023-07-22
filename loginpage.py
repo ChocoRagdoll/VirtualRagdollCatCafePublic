@@ -4,7 +4,6 @@ from tkinter import messagebox
 from PIL import Image, ImageTk
 import mysql.connector
 from signuppage import SignupPage
-from petexperience import PetExperience
 from statusboard import StatusBoard
 from userstatusboard import UserStatusBoard
 
@@ -20,11 +19,11 @@ LIGHT_BROWN = "#cfb49f"
 YELLOW = "#ffc331"
 
 class LoginPage(tk.Tk):
-    def __init__(self):
+    def __init__(self, pet_experience):
         super().__init__()
         self.title("Login Page")
         self.geometry("1000x700")
-        self.pet_experience = PetExperience() 
+        self.pet_experience = pet_experience
 
         self.create_login_page()
         
@@ -127,7 +126,7 @@ class LoginPage(tk.Tk):
     
     def signup_page(self):
         self.destroy()
-        SignupPage()
+        SignupPage(self.pet_experience)
     
     def user_enter(self, event):
         if self.usernameE.get()=='Username':

@@ -18,10 +18,13 @@ LIGHT_BROWN = "#cfb49f"
 YELLOW = "#ffc331"
 
 class BackLoginPage(tk.Tk):
-    def __init__(self):
+    def __init__(self, pet_experience):
         super().__init__()
         self.title("Login Page")
         self.geometry("1000x700")
+        
+        #pet experience
+        self.pet_experience = pet_experience
 
         self.create_login_page()
         
@@ -122,8 +125,7 @@ class BackLoginPage(tk.Tk):
             else:
                 messagebox.showinfo('Success', 'You are Logged in')
                 self.destroy()
-                pet_experience = PetExperience() 
-                UserStatusBoard(pet_experience, username, password)
+                UserStatusBoard(self.pet_experience, username, password)
                 #VirtualRagdollCatcafe()
                 
 
