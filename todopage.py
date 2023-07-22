@@ -4,23 +4,22 @@ from tkinter import *
 from PIL import ImageTk, Image
 # import mysql.connector
 
+
 BABY_PINK = "#f8c6c7"
 WHITE_PINK = "#faedf5"
+LIGHT_PINK = "#fef3f4"
 WHITE = "#fcfafb"
 HOT_PINK = "#f37af5"
 BROWN = "#9d6e6f"
 GREY = "#968b8a"
 
 class TodoPage:
-    def __init__(self, main, pet_experience, username, password):
+    def __init__(self, main, pet_experience):
         self.main = main
         self.pet_experience = pet_experience
-        self.username = username
-        self.password = password
 
         self.todo_page()
-
-        
+      
 
     def todo_page(self):
         self.todo_frame = tk.Frame(self.main, bg=WHITE_PINK)
@@ -60,7 +59,7 @@ class TodoPage:
 
         add_button = Button(self.todo_frame,
                             image=self.add_photo,
-                            command=lambda: self.add_task()).place(x=570, y=530)
+                            command=lambda: self.add_task()).place(x=560, y=500)
         
         #delete button
         delete_image = Image.open(self.file_path("delete.png"))
@@ -70,7 +69,8 @@ class TodoPage:
         
         delete_button = Button(self.todo_frame,
                                image=self.delete_photo,
-                               command=lambda: self.delete_task()).place(x=790, y=530)
+                               command=lambda: self.delete_task()).place(x=780, y=500)
+        
         
         with open("tasks.txt", "r") as f:
             read = f.readlines()
@@ -89,9 +89,6 @@ class TodoPage:
             file.close()
         self.new_task.delete(1.0, tk.END)
 
-        # add exp
-        self.feed_pet()
-
     #delete task function
     def delete_task(self):
         deleted = self.task_box.curselection()
@@ -104,70 +101,10 @@ class TodoPage:
                     file.write(line)
             file.truncate()
         self.task_box.delete(deleted)
-    
-    def feed_pet(self):
-        self.pet_experience.feed()
 
+        
     def file_path(self, filename):
         assets_folder = os.path.join("assets")
         path = os.path.join(assets_folder, filename)
         return path
 
-
-# TodoPage(tk.Tk())
-
-# Usage:
-# todo_page = TodoPage(self.main)
-
-
-'''
-    #add task function
-    def add_task(self):
-        tasks = self.new_task.get(1.0, tk.END)
-        self.task_box.insert(tk.END, tasks)
-        with open("tasks.txt", "a") as file:
-            file.write(tasks)
-            file.seek(0)
-            file.close()
-        self.new_task.delete(1.0, tk.END)
-
-    #delete task function
-    def delete_task(self):
-        deleted = self.task_box.curselection()
-        look = self.task_box.get(deleted)
-        with open("tasks.txt", "r+") as file:
-            new_file = file.readlines()
-            file.seek(0)
-            for line in new_file:
-                task = str(look)
-                if task not in line:
-                    file.write(line)
-            file.truncate()
-        self.task_box.delete(deleted)
-       
-    #add button
-    add_button = tk.Button(todo_frame,
-                            text="Add",
-                            font=("Calibri", 40, "bold"),
-                            bd=0,
-                            height=1,
-                            width=10,
-                            bg=HOT_PINK,
-                            fg=WHITE,
-                            command=add_task)
-
-    add_button.place(x=600, y=420)
-
-    #delete button
-    delete_button = tk.Button(todo_frame,
-                                text="Delete",
-                                font=("Calibri", 40, "bold"),
-                                bd=0,
-                                height=1,
-                                width=10,
-                                bg=HOT_PINK,
-                                fg=WHITE,
-                                command=delete_task)
-
-    delete_button.place(x=600, y=520)
-'''

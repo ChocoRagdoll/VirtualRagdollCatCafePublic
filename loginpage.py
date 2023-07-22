@@ -3,10 +3,10 @@ import tkinter as tk
 from tkinter import messagebox
 from PIL import Image, ImageTk
 import mysql.connector
-from statusboard import StatusBoard
-from main import VirtualRagdollCatcafe
 from signuppage import SignupPage
 from petexperience import PetExperience
+from statusboard import StatusBoard
+from userstatusboard import UserStatusBoard
 
 BABY_PINK = "#f8c6c7"
 WHITE_PINK = "#faedf5"
@@ -24,6 +24,7 @@ class LoginPage(tk.Tk):
         super().__init__()
         self.title("Login Page")
         self.geometry("1000x700")
+        self.pet_experience = PetExperience() 
 
         self.create_login_page()
         
@@ -68,35 +69,24 @@ class LoginPage(tk.Tk):
                                   bg=BROWN)
         self.passwordF.place(x=440,y=385)
 
-        #forget password button
-        self.forgetB = tk.Button(self,
-                                 text='Forgot Password?',
-                                 bd=0,
-                                 bg='white',
-                                 activebackground='white',
-                                 cursor='hand2',
-                                 font=('Microsoft Yeahei UI Light',20,'bold'),
-                                 fg=PURPLE,
-                                 activeforeground=PURPLE)
-        self.forgetB.place(x=600,y=390)
 
         #login button
         login_image = Image.open(self.file_path("login.png"))
 
-        login_image = login_image.resize((240, 80))
+        login_image = login_image.resize((160, 60))
         self.login_photo = ImageTk.PhotoImage(login_image)
 
         login_button = tk.Button(self,
                                  image=self.login_photo,
-                                 command=self.login_user).place(x=490, y=440)
+                                 command=self.login_user).place(x=520, y=400)
 
-        #do not have account text
+        #register account text
         self.noAccountLabel = tk.Label(self,
-                                       text="Don't have an account?",
-                                       font=('Open Sans',26, 'bold'),
+                                       text="Want to Register an Account?",
+                                       font=('Open Sans',24, 'bold'),
                                        fg=LIGHT_BROWN,
                                        bg='white')
-        self.noAccountLabel.place(x=520,y=550)
+        self.noAccountLabel.place(x=440,y=475)
 
         #create account button
         self.createAccountB = tk.Button(self,
@@ -109,8 +99,32 @@ class LoginPage(tk.Tk):
                                        cursor='hand2',
                                        bd=0,
                                        command=self.signup_page)
-        self.createAccountB.place(x=550,y=590)   
+        self.createAccountB.place(x=520,y=520)
 
+        #enter text
+        self.enterLabel = tk.Label(self,
+                                   text="Enter Without an Account",
+                                   font=('Open Sans',24, 'bold'),
+                                   fg=LIGHT_BROWN,
+                                   bg='white')
+        
+        self.enterLabel.place(x=480,y=560)
+
+        #enter button
+        enter_image = Image.open(self.file_path("enter.png"))
+
+        enter_image = enter_image.resize((120, 40))
+        self.enter_photo = ImageTk.PhotoImage(enter_image)
+
+        enter_button = tk.Button(self,
+                                 image=self.enter_photo,
+                                 command=self.open_statusboard).place(x=520, y=600)
+
+
+    def open_statusboard(self):
+        self.destroy()
+        StatusBoard(self.pet_experience)
+    
     def signup_page(self):
         self.destroy()
         SignupPage()
@@ -148,9 +162,7 @@ class LoginPage(tk.Tk):
             else:
                 messagebox.showinfo('Success', 'You are Logged in')
                 self.destroy()
-                pet_experience = PetExperience() 
-                StatusBoard(pet_experience, username, password)
-                #VirtualRagdollCatcafe()
+                UserStatusBoard(self.pet_experience, username, password)
                 
 
     def file_path(self, filename):
@@ -158,13 +170,7 @@ class LoginPage(tk.Tk):
         path = os.path.join(assets_folder, filename)
         return path
 
-
-
-
 LoginPage()
-
-
-
 
 
 

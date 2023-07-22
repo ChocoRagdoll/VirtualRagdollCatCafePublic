@@ -3,8 +3,6 @@ import tkinter as tk
 from tkinter import messagebox
 from PIL import Image, ImageTk
 import mysql.connector
-from statusboard import StatusBoard
-from main import VirtualRagdollCatcafe
 from backloginpage import BackLoginPage
 
 BABY_PINK = "#f8c6c7"

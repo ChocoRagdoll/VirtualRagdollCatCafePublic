@@ -5,7 +5,7 @@ import textblob as tb
 import os
 import random
 from PIL import ImageTk, Image
-from todopage import TodoPage
+from todopage_sql import TodoPage
 from translatepage import TranslatePage
 from chatpage import ChatPage
 from homepage import HomePage
@@ -20,8 +20,8 @@ BROWN = "#9d6e6f"
 GREY = "#968b8a"
 #path = "C:/Chrome Downloads/assets/"
 
-class StatusBoard(tk.Toplevel):
-    def __init__(self, pet_experience):
+class UserStatusBoard(tk.Toplevel):
+    def __init__(self, pet_experience, username, password):
 
         #main setup
         super().__init__()
@@ -30,6 +30,10 @@ class StatusBoard(tk.Toplevel):
 
         self.pet_experience = pet_experience
 
+        # username and password
+        self.username = username
+        self.password = password
+
         #control bar
         self.control_bar = ControlBar(self)
 
@@ -37,7 +41,7 @@ class StatusBoard(tk.Toplevel):
         self.main = Main(self)
         
         #options Widge
-        self.functions = Functions(self, self.control_bar, self.main, self.pet_experience)
+        self.functions = Functions(self, self.control_bar, self.main, self.pet_experience, self.username, self.password)
 
         #run
         self.mainloop()
@@ -71,7 +75,7 @@ class Main(tk.Frame):
 
 
 class Functions(tk.Frame):
-    def __init__(self, parent, control_bar, main, pet_experience):
+    def __init__(self, parent, control_bar, main, pet_experience, username, password):
         super().__init__(parent)
         self.control_bar = control_bar
         self.main = main
@@ -90,6 +94,8 @@ class Functions(tk.Frame):
         self.clear_photo = None
         self.create_tabs()
         self.pet_experience = pet_experience
+        self.username = username
+        self.password = password
 
     def show_label(self, label, page):
         self.hide_label()
@@ -202,9 +208,8 @@ class Functions(tk.Frame):
 
     #todo list page
     def todo_page(self):
-        todo_page = TodoPage(self.main, self.pet_experience)
-       
-       
+        todo_page = TodoPage(self.main, self.pet_experience, self.username, self.password)
+    
     #chat page                                                                                     
     def chat_page(self):
         chat_page = ChatPage(self.main)
@@ -234,4 +239,4 @@ class Functions(tk.Frame):
 
 if __name__ == "__main__": 
     pet_experience = PetExperience() 
-    StatusBoard(pet_experience)
+    UserStatusBoard(pet_experience,123, 123)
