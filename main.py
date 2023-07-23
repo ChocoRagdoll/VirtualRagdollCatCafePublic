@@ -5,13 +5,14 @@ import tkinter as tk
 from PIL import Image, ImageTk
 import send2trash
 from tkinterdnd2 import DND_FILES, TkinterDnD
-from loginpage import LoginPage
+from statusboard import StatusBoard, ControlBar, Main, Functions
 from petexperience import PetExperience
 
 class VirtualRagdollCatcafe(tk.Toplevel):
     def __init__(self, pet_experience):
         super().__init__()
-        
+
+
         self.x = 700
         self.y = 50
         self.status = 1
@@ -23,8 +24,8 @@ class VirtualRagdollCatcafe(tk.Toplevel):
         self.upcoming3_num = [9, 10]
         self.upcoming4_num = [11, 12]
         self.event_num = random.randrange(1, 3, 1)
-        self.assets_folder = os.path.join("assets")
 
+        self.assets_folder = os.path.join("assets")
         self.title("Virtual Ragdoll Catcafe")
         self.geometry(f'1024x1024+{self.x}+{self.y}')
 
@@ -48,12 +49,10 @@ class VirtualRagdollCatcafe(tk.Toplevel):
         self.bind("<B1-Motion>", self.drag)
         self.bind("<Configure>", self.resize)
         self.bind("<Double-Button-1>", self.open_status_board)
-
         self.image = self.tail_images[0]  # Assign the initial image reference
         self.label.config(image=self.image)
         self.change_event(self.progress, self.status, self.event_num, self.x)
-
-        #pet experience
+        
         self.pet_experience = pet_experience
 
         #self.mainloop()
@@ -61,7 +60,6 @@ class VirtualRagdollCatcafe(tk.Toplevel):
     def create_images(self, filename):
         gif_path = os.path.join(self.assets_folder, filename)
         original_gif = Image.open(gif_path)
-
         frames = []
         try:
             while True:
@@ -69,7 +67,6 @@ class VirtualRagdollCatcafe(tk.Toplevel):
                 original_gif.seek(len(frames))  # Move to the next frame
         except EOFError:
             pass
-
         return [ImageTk.PhotoImage(frame) for frame in frames]
 
     def gif_work(self, progress, frames):
@@ -111,10 +108,9 @@ class VirtualRagdollCatcafe(tk.Toplevel):
         self.label.config(image=self.image)
         self.after(100, self.change_event, self.progress, self.status, self.event_num, self.x)
 
-
     def get_random_event_num(self):
         return random.randrange(1, 13, 1)
-    
+
     def setup_drag_and_drop(self):
         self.label.drop_target_register(DND_FILES)
         self.label.dnd_bind('<<Drop>>', self.drop)
@@ -135,16 +131,12 @@ class VirtualRagdollCatcafe(tk.Toplevel):
             normalized_path = os.path.normpath(file_path)
             send2trash.send2trash(normalized_path)
             print(f"File '{file_path}' put to recycle bin.")
-
-            # add experience point
-            self.pet_experience.feed()
-    
         except OSError as e:
             print(f"Error deleting file '{file_path}': {e}")
 
     def open_status_board(self, event):
         # Create an instance of the status board window
-        status_board = LoginPage(self.pet_experience)
+        status_board = StatusBoard(self.pet_experience)
 
         # Position the status board above the cat
         cat_position = self.cat_label.winfo_rootx(), self.cat_label.winfo_rooty()
@@ -162,15 +154,18 @@ class VirtualRagdollCatcafe(tk.Toplevel):
         height = event.height
         self.geometry(f"{width}x{height}")
 
-
 if __name__ == "__main__":
     root = TkinterDnD.Tk()
-    pet_experience = PetExperience()
-    window = VirtualRagdollCatcafe(pet_experience)
+    window = VirtualRagdollCatcafe(PetExperience())
     window.bind("<ButtonPress-1>", window.start_drag)
     window.bind("<B1-Motion>", window.drag)
     window.bind("<Configure>", window.resize)
     root.mainloop()   
 
 
-#VirtualRagdollCatcafe()
+
+        
+        
+        
+
+        
