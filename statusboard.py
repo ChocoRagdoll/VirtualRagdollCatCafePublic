@@ -9,6 +9,7 @@ from todopage import TodoPage
 from translatepage import TranslatePage
 from chatpage import ChatPage
 from homepage import HomePage
+from customizationpage import CustomizationPage
 #from petexperience import PetExperience
 
 
@@ -21,7 +22,7 @@ GREY = "#968b8a"
 #path = "C:/Chrome Downloads/assets/"
 
 class StatusBoard(tk.Toplevel):
-    def __init__(self, pet_experience):
+    def __init__(self, pet_experience, cat_body):
 
         #main setup
         super().__init__()
@@ -29,6 +30,7 @@ class StatusBoard(tk.Toplevel):
         self.geometry("1000x700")
 
         self.pet_experience = pet_experience
+        self.cat_body = cat_body
 
         #control bar
         self.control_bar = ControlBar(self)
@@ -37,7 +39,7 @@ class StatusBoard(tk.Toplevel):
         self.main = Main(self)
         
         #options Widge
-        self.functions = Functions(self, self.control_bar, self.main, self.pet_experience)
+        self.functions = Functions(self, self.control_bar, self.main, self.pet_experience, self.cat_body)
 
         #run
         self.mainloop()
@@ -71,7 +73,7 @@ class Main(tk.Frame):
 
 
 class Functions(tk.Frame):
-    def __init__(self, parent, control_bar, main, pet_experience):
+    def __init__(self, parent, control_bar, main, pet_experience, cat_body):
         super().__init__(parent)
         self.control_bar = control_bar
         self.main = main
@@ -90,6 +92,7 @@ class Functions(tk.Frame):
         self.clear_photo = None
         self.create_tabs()
         self.pet_experience = pet_experience
+        self.cat_body = cat_body
 
     def show_label(self, label, page):
         self.hide_label()
@@ -198,7 +201,7 @@ class Functions(tk.Frame):
         
     #home page
     def home_page(self):
-        home_page = HomePage(self.main, self.pet_experience)
+        home_page = HomePage(self.main, self.pet_experience, self.cat_body)
 
     #todo list page
     def todo_page(self):
@@ -216,12 +219,15 @@ class Functions(tk.Frame):
 
     #customisation page
     def cust_page(self):
+        cust_page = CustomizationPage(self.main, self.cat_body)
+        '''
         cust_frame = tk.Frame(self.main, bg=WHITE_PINK)
         cust_frame.pack(side=tk.BOTTOM)
         cust_frame.propagate(False)
         cust_frame.configure(width=1000, height=640)
         lb5 = tk.Label(cust_frame,text = "CUST", font=("Calibri", 30, "bold"))
         lb5.pack()
+        '''
                                         
         
     def file_path(filename):
