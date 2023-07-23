@@ -6,6 +6,7 @@ from PIL import Image, ImageTk
 import send2trash
 from tkinterdnd2 import DND_FILES, TkinterDnD
 from statusboard import StatusBoard, ControlBar, Main, Functions
+from loginpage import LoginPage
 from petexperience import PetExperience
 
 class VirtualRagdollCatcafe(tk.Toplevel):
@@ -136,7 +137,7 @@ class VirtualRagdollCatcafe(tk.Toplevel):
 
     def open_status_board(self, event):
         # Create an instance of the status board window
-        status_board = StatusBoard(self.pet_experience)
+        status_board = LoginPage(self.pet_experience)
 
         # Position the status board above the cat
         cat_position = self.cat_label.winfo_rootx(), self.cat_label.winfo_rooty()

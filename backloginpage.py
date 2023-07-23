@@ -4,7 +4,7 @@ from tkinter import messagebox
 from PIL import Image, ImageTk
 import mysql.connector
 from userstatusboard import UserStatusBoard
-from petexperience import PetExperience
+#from petexperience import PetExperience
 
 BABY_PINK = "#f8c6c7"
 WHITE_PINK = "#faedf5"

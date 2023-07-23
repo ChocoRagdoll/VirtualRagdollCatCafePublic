@@ -4,7 +4,7 @@ from tkinter import messagebox
 from PIL import Image, ImageTk
 import mysql.connector
 from signuppage import SignupPage
-from petexperience import PetExperience
+#from petexperience import PetExperience
 from statusboard import StatusBoard
 from userstatusboard import UserStatusBoard
 
@@ -170,7 +170,7 @@ class LoginPage(tk.Tk):
         path = os.path.join(assets_folder, filename)
         return path
 
-LoginPage(PetExperience())
+#LoginPage(PetExperience())
 
 
 

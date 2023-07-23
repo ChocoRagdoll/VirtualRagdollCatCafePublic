@@ -9,7 +9,7 @@ from todopage_sql import TodoPage
 from translatepage import TranslatePage
 from chatpage import ChatPage
 from homepage import HomePage
-from petexperience import PetExperience
+#from petexperience import PetExperience
 
 
 BABY_PINK = "#f8c6c7"
@@ -236,7 +236,8 @@ class Functions(tk.Frame):
                                   
                                      
 
-
+'''
 if __name__ == "__main__": 
     pet_experience = PetExperience() 
     UserStatusBoard(pet_experience,123, 123)
+    '''
