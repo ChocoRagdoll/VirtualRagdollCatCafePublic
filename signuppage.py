@@ -153,4 +153,3 @@ class SignupPage(tk.Tk):
         assets_folder = os.path.join("assets")
         path = os.path.join(assets_folder, filename)
         return path
-
