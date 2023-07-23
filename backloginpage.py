@@ -3,7 +3,7 @@ import tkinter as tk
 from tkinter import messagebox
 from PIL import Image, ImageTk
 import mysql.connector
-from userstatusboard import UserStatusBoard
+from usermain import UserVirtualRagdollCatcafe
 #from petexperience import PetExperience
 
 BABY_PINK = "#f8c6c7"
@@ -125,7 +125,7 @@ class BackLoginPage(tk.Tk):
             else:
                 messagebox.showinfo('Success', 'You are Logged in')
                 self.destroy()
-                UserStatusBoard(self.pet_experience, username, password)
+                UserVirtualRagdollCatcafe(self.pet_experience, username, password)
                 #VirtualRagdollCatcafe()
                 
 

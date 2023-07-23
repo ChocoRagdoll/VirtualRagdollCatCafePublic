@@ -5,11 +5,11 @@ import tkinter as tk
 from PIL import Image, ImageTk
 import send2trash
 from tkinterdnd2 import DND_FILES, TkinterDnD
-from statusboard import StatusBoard, ControlBar, Main, Functions
+from userstatusboard import UserStatusBoard, ControlBar, Main, Functions
 #from petexperience import PetExperience
 
-class VirtualRagdollCatcafe(tk.Toplevel):
-    def __init__(self, pet_experience):
+class UserVirtualRagdollCatcafe(tk.Toplevel):
+    def __init__(self, pet_experience, username, password):
         super().__init__()
 
 
@@ -54,6 +54,8 @@ class VirtualRagdollCatcafe(tk.Toplevel):
         self.change_event(self.progress, self.status, self.event_num, self.x)
         
         self.pet_experience = pet_experience
+        self.username = username
+        self.password = password
 
         #self.mainloop()
 
@@ -136,7 +138,7 @@ class VirtualRagdollCatcafe(tk.Toplevel):
 
     def open_status_board(self, event):
         # Create an instance of the status board window
-        status_board = StatusBoard(self.pet_experience)
+        status_board = UserStatusBoard(self.pet_experience, self.username, self.password)
 
         # Position the status board above the cat
         cat_position = self.cat_label.winfo_rootx(), self.cat_label.winfo_rooty()
@@ -153,20 +155,13 @@ class VirtualRagdollCatcafe(tk.Toplevel):
         width = event.width
         height = event.height
         self.geometry(f"{width}x{height}")
+
 '''
 if __name__ == "__main__":
     root = TkinterDnD.Tk()
-    window = VirtualRagdollCatcafe(PetExperience())
+    window = UserVirtualRagdollCatcafe(PetExperience())
     window.bind("<ButtonPress-1>", window.start_drag)
     window.bind("<B1-Motion>", window.drag)
     window.bind("<Configure>", window.resize)
-    root.mainloop() 
+    root.mainloop()  
     '''
-
-
-
-        
-        
-        
-
-        

@@ -4,9 +4,9 @@ from tkinter import messagebox
 from PIL import Image, ImageTk
 import mysql.connector
 from signuppage import SignupPage
-#from petexperience import PetExperience
-from statusboard import StatusBoard
-from userstatusboard import UserStatusBoard
+from petexperience import PetExperience
+from main import VirtualRagdollCatcafe
+from usermain import UserVirtualRagdollCatcafe
 
 BABY_PINK = "#f8c6c7"
 WHITE_PINK = "#faedf5"
@@ -118,12 +118,12 @@ class LoginPage(tk.Tk):
 
         enter_button = tk.Button(self,
                                  image=self.enter_photo,
-                                 command=self.open_statusboard).place(x=520, y=600)
+                                 command=self.open_main).place(x=520, y=600)
 
 
-    def open_statusboard(self):
+    def open_main(self):
         self.destroy()
-        StatusBoard(self.pet_experience)
+        VirtualRagdollCatcafe(self.pet_experience)
     
     def signup_page(self):
         self.destroy()
@@ -162,7 +162,7 @@ class LoginPage(tk.Tk):
             else:
                 messagebox.showinfo('Success', 'You are Logged in')
                 self.destroy()
-                UserStatusBoard(self.pet_experience, username, password)
+                UserVirtualRagdollCatcafe(self.pet_experience, username, password)
                 
 
     def file_path(self, filename):
@@ -170,7 +170,7 @@ class LoginPage(tk.Tk):
         path = os.path.join(assets_folder, filename)
         return path
 
-#LoginPage(PetExperience())
+LoginPage(PetExperience())
 
 
 
