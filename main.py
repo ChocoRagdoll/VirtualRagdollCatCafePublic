@@ -2,6 +2,7 @@ import os
 import sys
 import random
 import pystray
+import threading
 import tkinter as tk
 from PIL import Image, ImageTk
 import send2trash
@@ -13,7 +14,6 @@ from petexperience import PetExperience
 class VirtualRagdollCatcafe(tk.Toplevel):
     def __init__(self, pet_experience):
         super().__init__()
-
 
         self.x = 700
         self.y = 50
@@ -43,6 +43,8 @@ class VirtualRagdollCatcafe(tk.Toplevel):
         self.label = tk.Label(self, bd=0, bg='black')
 
         self.setup_drag_and_drop()
+        self.icon_thread = threading.Thread(target=self.setup_system_tray, daemon=True)
+        self.icon_thread.start()
 
         self.config(highlightbackground='black')
         self.overrideredirect(True)
@@ -168,6 +170,11 @@ class VirtualRagdollCatcafe(tk.Toplevel):
         self.y = event.y_root - self.offset_y
         self.geometry(f"+{self.x}+{self.y}")
 
+    def reposition_cat(self):
+        self.x = 700
+        self.y = 50
+        print("Repositioning cat...")
+
     def set_gif(self, filepath, n):
         if n == 1:
             self.tail_images = self.create_images_absolute(filepath)
@@ -181,11 +188,41 @@ class VirtualRagdollCatcafe(tk.Toplevel):
             self.fed_images = self.create_images_absolute(filepath)
         elif n == 6:
             self.headpat_images = self.create_images_absolute(filepath)
-               
+    
+    def setup_system_tray(self):
+        def exit_action(icon, item):
+            icon.stop()
+            self.quit()
+            os._exit(0)
 
+        def reposition_action(icon, item):
+            self.reposition_cat()
+
+        # Use an existing .ico file for the icon
+        icon_image = Image.open(self.file_path("icon.ico"))
+
+        # Create a system tray icon with an 'Exit' option and a 'Recenter' option
+        self.icon = pystray.Icon(
+            "virtual_cat", 
+            icon_image, 
+            "Virtual Ragdoll Catcafe", 
+            menu=pystray.Menu(
+                pystray.MenuItem('Reposition', reposition_action),
+                pystray.MenuItem('Exit', exit_action)
+            )
+        )
+
+        self.icon.run()
+    
+    def file_path(self, filename):
+        assets_folder = os.path.join("assets")
+        path = os.path.join(assets_folder, filename)
+        return path
+    
 
 if __name__ == "__main__":
     root = TkinterDnD.Tk()
+    root.withdraw()
     window = VirtualRagdollCatcafe(PetExperience())
     window.bind("<ButtonPress-1>", window.start_drag)
     window.bind("<B1-Motion>", window.drag)
