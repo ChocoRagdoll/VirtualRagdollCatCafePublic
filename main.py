@@ -138,6 +138,7 @@ class VirtualRagdollCatcafe(tk.Toplevel):
         files = event.widget.tk.splitlist(event.data)
         for file in files:
             self.delete_file(file)
+        self.pet_experience.feed()
 
     def delete_file(self, file_path):
         try:
