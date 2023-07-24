@@ -20,9 +20,10 @@ YELLOW = "#ffc331"
 #path = "/Users/chengege/Downloads/"
 
 class HomePage:
-    def __init__(self, root, pet_experience):
+    def __init__(self, root, pet_experience, cat_body):
         self.root = root
         self.pet_experience = pet_experience
+        self.cat_body = cat_body
 
         self.create_home_frame()
         
@@ -56,6 +57,10 @@ class HomePage:
         
         self.total_exp_label = tk.Label(self.home_frame, text="0", font=("Helvetica", 60), bg=LIGHT_PINK, fg=BROWN)
         self.total_exp_label.place(x=460,y=375)
+
+        self.size_slider = tk.Scale(self.root, from_=0, to=1000, length=400, sliderlength=30, bg=LIGHT_PINK, fg=BROWN, 
+                                    sliderrelief="raised", bd=3,orient=tk.HORIZONTAL, command=self.on_slider_change)
+        self.size_slider.place(x=400, y=500) 
     
     def update_ui(self):
         current_level = self.pet_experience.current_level
@@ -80,6 +85,10 @@ class HomePage:
             self.pet_experience.experience = pet_data["experience"]
         except FileNotFoundError:
             print("No saved pet data found. Starting with a new pet.")
+
+    def on_slider_change(self, event):
+        new_size = int(self.size_slider.get())
+        self.cat_body.resize_window(new_size)
     
     def file_path(self, filename):
         assets_folder = os.path.join("assets")
