@@ -27,16 +27,19 @@ class CustomizationPage:
         self.cust_frame.pack(side=tk.BOTTOM)
         self.cust_frame.propagate(False)
         self.cust_frame.configure(width=1000, height=640)
-        lb5 = tk.Label(self.cust_frame,text = "CUSTOMIZATION", font=("Calibri", 30, "bold"))
-        lb5.pack()
 
+        custF_image = Image.open(self.file_path("customizationF.png"))
+        custF_image = custF_image.resize((1000, 640))
+        self.custF_photo = ImageTk.PhotoImage(custF_image)
+        custF_label = tk.Label(self.cust_frame, image=self.custF_photo)
+        custF_label.pack()
         
-        tail_button = self.create_button("tail_cust.png", 1, 600, 400)
-        blink_button = self.create_button("blink_cust.png", 2, 350, 200)
-        walkl_button = self.create_button("walkl_cust.png", 3, 100, 200)
-        walkr_button = self.create_button("walkr_cust.png", 4, 600, 200)
-        fed_button = self.create_button("fed_cust.png", 5, 100, 400)
-        headpat_button = self.create_button("headpat_cust.png", 6, 350, 400)
+        tail_button = self.create_button("tail_cust.png", 1, 650, 430)
+        blink_button = self.create_button("blink_cust.png", 2, 400, 230)
+        walkl_button = self.create_button("walkl_cust.png", 3, 150, 230)
+        walkr_button = self.create_button("walkr_cust.png", 4, 650, 230)
+        fed_button = self.create_button("fed_cust.png", 5, 150, 430)
+        headpat_button = self.create_button("headpat_cust.png", 6, 400, 430)
         
     def create_button(self, filename, n, x, y):
         image_1 = Image.open(self.file_path(filename))

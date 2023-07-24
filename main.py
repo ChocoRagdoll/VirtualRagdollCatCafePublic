@@ -1,6 +1,7 @@
 import os
 import sys
 import random
+import pystray
 import tkinter as tk
 from PIL import Image, ImageTk
 import send2trash
