@@ -1,0 +1,1 @@
+pyinstaller --onefile --windowed --icon=icon.ico --add-data C:\Users\16son\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\tkinterdnd2;tkinterdnd2\ main.py
