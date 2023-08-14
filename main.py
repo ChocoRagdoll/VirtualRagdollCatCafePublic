@@ -8,7 +8,7 @@ from PIL import Image, ImageTk
 import send2trash
 from tkinterdnd2 import DND_FILES, TkinterDnD
 from statusboard import StatusBoard, ControlBar, Main, Functions
-#from petexperience import PetExperience
+from petexperience import PetExperience
 
 class VirtualRagdollCatcafe(tk.Toplevel):
     def __init__(self, pet_experience):
@@ -156,8 +156,6 @@ class VirtualRagdollCatcafe(tk.Toplevel):
     def open_status_board(self, event):
         # Create an instance of the status board window
 
-        status_board = StatusBoard(self.pet_experience)
-
         self.status_board = StatusBoard(self.pet_experience, self)
 
 
@@ -228,7 +226,6 @@ class VirtualRagdollCatcafe(tk.Toplevel):
         path = os.path.join(assets_folder, filename)
         return path
     
-'''
 if __name__ == "__main__":
     root = TkinterDnD.Tk()
     root.withdraw()
@@ -237,7 +234,6 @@ if __name__ == "__main__":
     window.bind("<B1-Motion>", window.drag)
     window.bind("<Configure>", window.resize)
     root.mainloop() 
-    '''
 
 
 
